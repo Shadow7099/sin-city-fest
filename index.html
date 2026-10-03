@@ -204,6 +204,27 @@
             padding: 0;
         }
 
+        /* ============ IMAGEN PERSONAJES 2 ============ */
+        #heroImageContainer2 {
+            width: 100%;
+            height: 400px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #heroImageContainer2 img {
+            width: auto;
+            height: 100%;
+            object-fit: contain;
+            padding: 0;
+        }
+
         /* ============ INFO BOXES ============ */
         .date-boxes {
             position: relative;
@@ -492,49 +513,8 @@
                     </div>
                 </div>
 
-                <!-- PRECIOS -->
-                <div class="pricing-grid">
-                    <div class="pricing-column">
-                        <div class="access-title">General Access:</div>
-                        <div class="price-list">
-                            <div class="price-item">
-                                <span class="price-label">Etapa 1:</span>
-                                <span class="price-amount">$25K</span>
-                            </div>
-                            <div class="price-item">
-                                <span class="price-label">Etapa 2:</span>
-                                <span class="price-amount">$30K</span>
-                            </div>
-                            <div class="price-item">
-                                <span class="price-label">Etapa 3:</span>
-                                <span class="price-amount">$35K</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="pricing-column">
-                        <div class="access-title">VIP Access:</div>
-                        <div class="price-list">
-                            <div class="price-item">
-                                <span class="price-label">Etapa 1:</span>
-                                <span class="price-amount">$35K</span>
-                            </div>
-                            <div class="price-item">
-                                <span class="price-label">Etapa 2:</span>
-                                <span class="price-amount">$40K</span>
-                            </div>
-                            <div class="price-item">
-                                <span class="price-label">Etapa 3:</span>
-                                <span class="price-amount">$45K</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PREMIO -->
-                <div class="prize-banner">
-                    <div class="prize-text">$7M EN PREMIOS A LOS MEJORES DISFRACES</div>
-                </div>
+                <!-- IMAGEN PERSONAJES 2 -->
+                <div id="heroImageContainer2"></div>
 
                 <!-- BOTONES COMPRA -->
                 <div class="buy-section">
@@ -569,14 +549,32 @@
                 img.alt = 'Personajes Sin City Fest';
                 container.innerHTML = '';
                 container.appendChild(img);
-                console.log('Personajes cargados exitosamente');
+                console.log('Personajes 1 cargados exitosamente');
             } catch (error) {
                 console.error('Error al cargar imagen:', error);
             }
         }
 
+        // Cargar segunda imagen de personajes
+        async function loadHeroImage2() {
+            try {
+                const url = 'https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/PERSONAJES%202.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L1BFUlNPTkFKRVMgMi53ZWJwIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc5MTA2NzU3MCwiZXhwIjoxODIyNjAzNTcwfQ.A9jV7cxNYTQwRI6FWFNFmLi3BGLMvTKbJNBvPXyyyT4HnX7SILHAbv7-8iH_dVx8yamF17uwEs5HagmHCpFzGQ';
+                
+                const container = document.getElementById('heroImageContainer2');
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = 'Personajes Sin City Fest 2';
+                container.innerHTML = '';
+                container.appendChild(img);
+                console.log('Personajes 2 cargados exitosamente');
+            } catch (error) {
+                console.error('Error al cargar imagen 2:', error);
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', async () => {
             await loadHeroImage();
+            await loadHeroImage2();
         });
     </script>
 </body>
