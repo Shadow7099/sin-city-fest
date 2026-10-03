@@ -21,9 +21,11 @@
             --color-black: #1A1A1A;
             --color-cream: #E8DCC0;
             --color-orange: #F77F00;
+            --color-dark-red: #8B2E2E;
+            --color-dark-orange: #CC6600;
         }
 
-        /* TIPOGRAFÍAS DESDE STORAGE - URLS EXACTAS */
+        /* TIPOGRAFÍAS DESDE STORAGE */
         @font-face {
             font-family: 'Barbra-Regular';
             src: url('https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/Barbra-Regular.otf?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L0JhcmJyYS1SZWd1bGFyLm90ZiIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3OTEwNDQ2OTYsImV4cCI6MTgyMjU4MDY5Nn0.jR0luJ2XcTGUXLwEe0I-nCTx4UDVcvoBAenS9bLZopnGTA0UCSFyDQ6XnDcQZsc2poGRZqwVQVD2CBebW1w99g') format('opentype');
@@ -38,18 +40,44 @@
             font-style: normal;
         }
 
+        /* EFECTO GRANULADO CUPHEAD */
+        @keyframes grain {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 256px 256px;
+            }
+        }
+
         html, body {
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--color-black) 0%, #0d0d0d 100%);
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0f0f 50%, #0d0d0d 100%);
             color: var(--color-cream);
             font-family: 'LexieReadable-Bold', sans-serif;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* Fondo dinámico desde Supabase */
         body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise" /></filter><rect width="256" height="256" fill="%23000000" opacity="0.03" filter="url(%23noise)"/></svg>');
+            background-size: 256px 256px;
+            animation: grain 8s steps(10) infinite;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* Fondo dinámico desde Supabase */
+        body::after {
             content: '';
             position: fixed;
             top: 0;
@@ -59,206 +87,314 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            opacity: 0.3;
-            z-index: -1;
+            opacity: 0.2;
+            z-index: -2;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 0 20px;
             position: relative;
             z-index: 1;
         }
 
-        /* HEADER */
-        header {
-            text-align: center;
-            margin-bottom: 60px;
-            animation: fadeIn 1s ease-in;
-        }
-
-        .logo {
-            font-size: 3.5rem;
-            font-family: 'Barbra-Regular', serif;
-            font-weight: 400;
-            color: var(--color-red);
-            text-shadow: 4px 4px 0 var(--color-yellow), 
-                         8px 8px 0 var(--color-orange);
-            letter-spacing: 3px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            border: 4px solid var(--color-yellow);
-            padding: 20px 40px;
-            display: inline-block;
-            background: rgba(26, 26, 26, 0.8);
-        }
-
-        .subtitle {
-            font-size: 1.3rem;
-            font-family: 'LexieReadable-Bold', sans-serif;
-            color: var(--color-yellow);
-            font-weight: 700;
-            margin-top: 15px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* HERO SECTION */
+        /* ============ HERO SECTION ============ */
         .hero {
+            min-height: 100vh;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            gap: 60px;
             align-items: center;
-            margin-bottom: 60px;
+            padding: 80px 0;
+            position: relative;
         }
 
-        .hero-content {
-            padding: 30px;
-            border: 4px solid var(--color-orange);
-            background: rgba(26, 26, 26, 0.9);
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
         }
 
-        .hero-title {
+        .main-title {
             font-family: 'Barbra-Regular', serif;
-            font-size: 2.8rem;
+            font-size: 5rem;
             font-weight: 400;
             color: var(--color-red);
-            text-shadow: 3px 3px 0 var(--color-yellow);
-            margin-bottom: 20px;
-            line-height: 1.2;
+            line-height: 1;
+            text-shadow: 
+                6px 6px 0 var(--color-yellow),
+                12px 12px 0 var(--color-orange),
+                18px 18px 20px rgba(0, 0, 0, 0.8);
+            letter-spacing: -2px;
             text-transform: uppercase;
+            border: 5px solid var(--color-yellow);
+            padding: 30px 40px;
+            background: rgba(26, 26, 26, 0.95);
+            position: relative;
+            margin-bottom: 10px;
         }
 
-        .event-date {
-            font-family: 'Barbra-Regular', serif;
-            font-size: 1.8rem;
-            color: var(--color-yellow);
-            font-weight: 400;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 0 var(--color-orange);
-            text-transform: uppercase;
+        .main-title::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border: 3px solid var(--color-orange);
+            z-index: -1;
+            opacity: 0.5;
         }
 
-        .event-details {
+        .subtitle-main {
             font-family: 'LexieReadable-Bold', sans-serif;
-            font-size: 1rem;
-            line-height: 1.8;
-            color: var(--color-cream);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-yellow);
+            text-shadow: 3px 3px 0 var(--color-red);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+
+        .event-info-hero {
+            background: rgba(26, 26, 26, 0.95);
+            border: 5px solid var(--color-red);
+            padding: 40px;
+            position: relative;
+            box-shadow: 8px 8px 0 rgba(230, 57, 70, 0.3);
+        }
+
+        .event-info-hero::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            width: 20px;
+            height: 20px;
+            background: var(--color-yellow);
+            border: 3px solid var(--color-red);
+        }
+
+        .event-info-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: -8px;
+            width: 20px;
+            height: 20px;
+            background: var(--color-orange);
+            border: 3px solid var(--color-red);
+        }
+
+        .event-date-big {
+            font-family: 'Barbra-Regular', serif;
+            font-size: 3rem;
+            font-weight: 400;
+            color: var(--color-yellow);
+            text-shadow: 4px 4px 0 var(--color-dark-orange);
             margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .event-detail {
+            font-family: 'LexieReadable-Bold', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-cream);
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed var(--color-orange);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .event-detail strong {
+            color: var(--color-yellow);
+            display: block;
             font-weight: 700;
         }
 
-        .event-details strong {
+        .event-highlight {
+            background: rgba(230, 57, 70, 0.2);
+            border-left: 5px solid var(--color-red);
+            padding: 20px;
+            margin-top: 20px;
+            font-family: 'Barbra-Regular', serif;
+            font-size: 2rem;
+            font-weight: 400;
             color: var(--color-yellow);
-            font-weight: 700;
+            text-shadow: 3px 3px 0 var(--color-red);
+            text-transform: uppercase;
+        }
+
+        .hero-right {
+            position: relative;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         #heroImageContainer {
-            border: 4px solid var(--color-yellow);
-            background: rgba(0, 0, 0, 0.7);
-            min-height: 400px;
+            width: 100%;
+            height: 100%;
+            border: 8px solid var(--color-yellow);
+            background: rgba(0, 0, 0, 0.8);
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            position: relative;
+            box-shadow: 12px 12px 0 rgba(230, 57, 70, 0.4);
+        }
+
+        #heroImageContainer::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border: 5px solid var(--color-orange);
+            z-index: 0;
         }
 
         #heroImageContainer img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            position: relative;
+            z-index: 1;
         }
 
-        /* PRICING SECTION */
+        /* ============ PRICING SECTION ============ */
         .pricing-section {
-            margin-bottom: 60px;
+            padding: 100px 0;
+            border-top: 6px dashed var(--color-yellow);
+            margin-top: 80px;
         }
 
         .section-title {
             font-family: 'Barbra-Regular', serif;
-            font-size: 2.2rem;
+            font-size: 3.5rem;
             font-weight: 400;
             color: var(--color-red);
-            text-shadow: 2px 2px 0 var(--color-yellow);
-            margin-bottom: 40px;
+            text-shadow: 4px 4px 0 var(--color-yellow);
             text-align: center;
             text-transform: uppercase;
-            border-bottom: 3px dashed var(--color-orange);
-            padding-bottom: 15px;
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+            width: 100%;
         }
 
-        .pricing-grid {
+        .pricing-container {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 60px;
         }
 
         .pricing-card {
-            border: 4px solid var(--color-yellow);
-            padding: 30px;
-            background: rgba(26, 26, 26, 0.95);
+            border: 6px solid var(--color-yellow);
+            padding: 40px;
+            background: rgba(26, 26, 26, 0.98);
+            position: relative;
+            box-shadow: 10px 10px 0 rgba(244, 208, 63, 0.2);
             transition: all 0.3s ease;
         }
 
         .pricing-card:hover {
             transform: translate(-5px, -5px);
-            box-shadow: 10px 10px 0 var(--color-orange);
+            box-shadow: 15px 15px 0 rgba(244, 208, 63, 0.3);
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border: 3px solid var(--color-orange);
+            z-index: -1;
         }
 
         .access-type {
             font-family: 'Barbra-Regular', serif;
-            font-size: 1.6rem;
+            font-size: 2.2rem;
             font-weight: 400;
             color: var(--color-yellow);
-            text-shadow: 2px 2px 0 var(--color-red);
-            margin-bottom: 15px;
+            text-shadow: 3px 3px 0 var(--color-red);
+            margin-bottom: 30px;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid var(--color-orange);
         }
 
         .price-row {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             font-family: 'LexieReadable-Bold', sans-serif;
-            margin-bottom: 10px;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--color-orange);
-            font-size: 0.95rem;
+            margin-bottom: 18px;
+            padding: 15px 0;
+            border-bottom: 2px dashed var(--color-orange);
             font-weight: 700;
         }
 
         .price-label {
             color: var(--color-cream);
-            font-weight: 700;
+            font-size: 1.1rem;
         }
 
         .price-value {
             color: var(--color-yellow);
-            font-weight: 700;
+            font-size: 1.4rem;
             font-family: 'Barbra-Regular', serif;
+            font-weight: 400;
+            text-shadow: 2px 2px 0 var(--color-orange);
         }
 
-        /* INFO SECTION */
+        /* ============ INFO SECTION ============ */
         .info-section {
-            background: rgba(230, 57, 70, 0.1);
-            border: 4px solid var(--color-red);
-            padding: 40px;
-            margin-bottom: 40px;
+            background: linear-gradient(135deg, rgba(230, 57, 70, 0.15) 0%, rgba(247, 127, 0, 0.1) 100%);
+            border: 6px solid var(--color-red);
+            padding: 60px;
+            margin-bottom: 60px;
+            position: relative;
+            box-shadow: 8px 8px 0 rgba(230, 57, 70, 0.2);
+        }
+
+        .info-section::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border: 4px dashed var(--color-yellow);
+            z-index: -1;
         }
 
         .info-title {
             font-family: 'Barbra-Regular', serif;
-            font-size: 1.8rem;
+            font-size: 2.5rem;
             font-weight: 400;
             color: var(--color-yellow);
-            text-shadow: 2px 2px 0 var(--color-red);
-            margin-bottom: 20px;
+            text-shadow: 3px 3px 0 var(--color-red);
+            margin-bottom: 30px;
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .info-content {
             font-family: 'LexieReadable-Bold', sans-serif;
-            font-size: 1rem;
+            font-size: 1.2rem;
             line-height: 1.8;
             color: var(--color-cream);
             font-weight: 700;
@@ -269,109 +405,165 @@
             font-weight: 700;
         }
 
-        /* FOOTER */
-        footer {
-            text-align: center;
-            padding: 30px;
-            border-top: 3px dashed var(--color-yellow);
-            font-family: 'LexieReadable-Bold', sans-serif;
-            font-size: 0.9rem;
-            color: var(--color-cream);
-            font-weight: 700;
+        .info-content p {
+            margin-bottom: 15px;
         }
 
-        .social {
-            margin: 20px 0;
-        }
-
-        .social-text {
+        .warning-text {
             font-family: 'Barbra-Regular', serif;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: var(--color-orange);
+            text-shadow: 2px 2px 0 var(--color-red);
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 3px dashed var(--color-red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ============ FOOTER ============ */
+        footer {
+            border-top: 6px dashed var(--color-yellow);
+            padding: 50px 0;
+            text-align: center;
+            position: relative;
+            margin-top: 80px;
+        }
+
+        .social-info {
+            font-family: 'Barbra-Regular', serif;
+            font-size: 2rem;
             font-weight: 400;
             color: var(--color-yellow);
-            text-shadow: 1px 1px 0 var(--color-orange);
+            text-shadow: 3px 3px 0 var(--color-red);
+            margin-bottom: 20px;
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        /* ANIMATIONS */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .footer-text {
+            font-family: 'LexieReadable-Bold', sans-serif;
+            font-size: 1rem;
+            color: var(--color-cream);
+            font-weight: 700;
+            margin-bottom: 15px;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 1024px) {
             .hero {
                 grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 60px 0;
             }
 
-            .pricing-grid {
+            .hero-right {
+                height: 400px;
+            }
+
+            .main-title {
+                font-size: 3.5rem;
+                padding: 20px 30px;
+            }
+
+            .pricing-container {
                 grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+                padding: 15px 20px;
             }
 
-            .logo {
-                font-size: 2.2rem;
-                padding: 15px 30px;
+            .subtitle-main {
+                font-size: 1.2rem;
             }
 
-            .hero-title {
-                font-size: 1.8rem;
+            .event-date-big {
+                font-size: 2rem;
             }
 
             .section-title {
-                font-size: 1.6rem;
+                font-size: 2.2rem;
+            }
+
+            .pricing-card {
+                padding: 25px;
+            }
+
+            .access-type {
+                font-size: 1.5rem;
+            }
+
+            .info-section {
+                padding: 30px;
+            }
+
+            .event-info-hero {
+                padding: 25px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- HEADER -->
-        <header>
-            <div class="logo">SIN CITY FEST</div>
-            <div class="subtitle">Halloween Edition 2026</div>
-        </header>
-
         <!-- HERO SECTION -->
         <section class="hero">
-            <div class="hero-content">
-                <h1 class="hero-title">Noche de Disfraces y Premios</h1>
-                <div class="event-date">VIE 30 OCT</div>
-                <div class="event-details">
-                    <p><strong>Hora:</strong> 7:00 PM Open Doors</p>
-                    <p style="margin-top: 10px;"><strong>Lugar:</strong> Hacienda El Encanto, Km 5.5 Vía Suba-Cota, Bogotá</p>
-                    <p style="margin-top: 10px;"><strong>Entretenimiento:</strong> Special Local DJs Line Up x Atracciones</p>
-                    <p style="margin-top: 10px;"><strong>Premios:</strong> <span style="color: #F4D03F; font-size: 1.2rem;">$7M en premios a los mejores disfraces</span></p>
+            <div class="hero-left">
+                <div class="main-title">SIN CITY FEST</div>
+                <div class="subtitle-main">Halloween Edition</div>
+
+                <div class="event-info-hero">
+                    <div class="event-date-big">VIE 30 OCT</div>
+                    
+                    <div class="event-detail">
+                        <strong>7:00 PM</strong> Open Doors
+                    </div>
+
+                    <div class="event-detail">
+                        <strong>UBICACIÓN:</strong> Hacienda El Encanto, Km 5.5 Vía Suba-Cota
+                    </div>
+
+                    <div class="event-detail">
+                        <strong>ENTRETENIMIENTO:</strong> Special Local DJs Lineup + Atracciones
+                    </div>
+
+                    <div class="event-highlight">
+                        $7M EN PREMIOS A LOS MEJORES DISFRACES
+                    </div>
                 </div>
             </div>
-            <div id="heroImageContainer">
-                <!-- Imagen de personajes cargada desde Supabase -->
+
+            <div class="hero-right">
+                <div id="heroImageContainer">
+                    <!-- Imagen de personajes desde Supabase -->
+                </div>
             </div>
         </section>
 
         <!-- PRICING SECTION -->
         <section class="pricing-section">
             <h2 class="section-title">Entradas y Acceso</h2>
-            <div class="pricing-grid">
+            
+            <div class="pricing-container">
                 <!-- GENERAL ACCESS -->
                 <div class="pricing-card">
                     <div class="access-type">General Access</div>
+                    
                     <div class="price-row">
-                        <span class="price-label">Entrada 1:</span>
+                        <span class="price-label">ETAPA 1:</span>
                         <span class="price-value">$25K</span>
                     </div>
                     <div class="price-row">
-                        <span class="price-label">Entrada 2:</span>
+                        <span class="price-label">ETAPA 2:</span>
                         <span class="price-value">$30K</span>
                     </div>
                     <div class="price-row">
-                        <span class="price-label">Entrada 3:</span>
+                        <span class="price-label">ETAPA 3:</span>
                         <span class="price-value">$35K</span>
                     </div>
                 </div>
@@ -379,16 +571,17 @@
                 <!-- VIP ACCESS -->
                 <div class="pricing-card">
                     <div class="access-type">VIP Access</div>
+                    
                     <div class="price-row">
-                        <span class="price-label">Entrada 1:</span>
+                        <span class="price-label">ETAPA 1:</span>
                         <span class="price-value">$35K</span>
                     </div>
                     <div class="price-row">
-                        <span class="price-label">Entrada 2:</span>
+                        <span class="price-label">ETAPA 2:</span>
                         <span class="price-value">$40K</span>
                     </div>
                     <div class="price-row">
-                        <span class="price-label">Entrada 3:</span>
+                        <span class="price-label">ETAPA 3:</span>
                         <span class="price-value">$45K</span>
                     </div>
                 </div>
@@ -397,22 +590,20 @@
 
         <!-- INFO SECTION -->
         <section class="info-section">
-            <h2 class="info-title">Información y Tickets</h2>
+            <h2 class="info-title">Info & Tickets</h2>
             <div class="info-content">
-                <p><strong>@SINCITY.FEST</strong> - Síguenos para actualizaciones en tiempo real</p>
-                <p style="margin-top: 15px;"><strong>@SKYLINE.FEST</strong> - También en nuestro segundo perfil</p>
-                <p style="margin-top: 15px; color: #F77F00;">Compra tus entradas ahora y asegúrate tu lugar en el evento más épico de Halloween.</p>
+                <p><strong>@SKYLINE.FEST</strong> - Síguenos para actualizaciones en tiempo real y compra de entradas</p>
+                <p style="margin-top: 20px;">Compra tus entradas ahora y asegúrate tu lugar en el evento más épico de Halloween.</p>
+                <div class="warning-text">Nos Reservamos El Derecho De Admisión Y Permanencia</div>
             </div>
         </section>
     </div>
 
     <!-- FOOTER -->
     <footer>
-        <div class="social">
-            <div class="social-text">SIN CITY FEST</div>
-            <p style="margin-top: 10px;">Halloween Edition 2026</p>
-        </div>
-        <p style="margin-top: 20px;">Hacienda El Encanto • Bogotá • Viernes 30 de Octubre</p>
+        <div class="social-info">SIN CITY FEST</div>
+        <div class="footer-text">Halloween Edition 2026</div>
+        <div class="footer-text">Hacienda El Encanto • Bogotá • Viernes 30 de Octubre</div>
     </footer>
 
     <!-- SCRIPTS -->
@@ -435,8 +626,10 @@
                 if (error) throw error;
 
                 if (data && data.image_url) {
+                    document.body.style.setProperty('--bg-image', `url('${data.image_url}')`);
+                    const afterElement = window.getComputedStyle(document.body, '::after');
                     document.body.style.backgroundImage = `url('${data.image_url}')`;
-                    console.log('Fondo RECUADRO cargado desde Supabase');
+                    console.log('Fondo RECUADRO cargado');
                 }
             } catch (error) {
                 console.error('Error al cargar fondo:', error);
@@ -461,16 +654,16 @@
                     img.alt = 'Personajes Sin City Fest';
                     container.innerHTML = '';
                     container.appendChild(img);
-                    console.log('Imagen PERSONAJES 1 cargada desde Supabase');
+                    console.log('Imagen PERSONAJES 1 cargada');
                 }
             } catch (error) {
                 console.error('Error al cargar imagen hero:', error);
             }
         }
 
-        // Ejecutar al cargar la página
+        // Ejecutar al cargar
         document.addEventListener('DOMContentLoaded', async () => {
-            console.log('Iniciando carga de recursos desde Supabase...');
+            console.log('Cargando recursos desde Supabase...');
             await loadBackgroundImage();
             await loadHeroImage();
         });
