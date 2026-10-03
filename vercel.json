@@ -1,0 +1,45 @@
+{
+  "name": "sin-city-fest",
+  "version": 2,
+  "public": true,
+  "buildCommand": null,
+  "outputDirectory": null,
+  "framework": null,
+  "regions": ["sfo1"],
+  "functions": {
+    "api/**/*.js": {
+      "maxDuration": 30
+    }
+  },
+  "env": [
+    {
+      "key": "VITE_SUPABASE_URL",
+      "value": "https://tpdormyzwodptmtdksrs.supabase.co"
+    },
+    {
+      "key": "VITE_SUPABASE_ANON_KEY",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwZG9ybXl6d29kcHRtdGRrc3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMzU4MjYsImV4cCI6MjEwNjYxMTgyNn0.elK5v13Ufz1ogpykGnE0713OuMha6f03djTnIgYJ7iY"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/admin",
+      "destination": "/admin.html"
+    },
+    {
+      "source": "/",
+      "destination": "/index.html"
+    }
+  ]
+}

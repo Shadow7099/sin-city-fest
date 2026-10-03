@@ -1,0 +1,33 @@
+{
+  "name": "sin-city-fest",
+  "version": "1.0.0",
+  "description": "Landing page para Sin City Fest Halloween Edition con Supabase",
+  "main": "index.html",
+  "author": "MiDía Studio",
+  "license": "MIT",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "start": "npm run dev",
+    "build": "echo 'Static site - no build needed'",
+    "deploy": "bash deploy.sh"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.43.0"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "landing-page",
+    "supabase",
+    "halloween",
+    "event",
+    "art-deco"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Shadow7099/sin-city-fest.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Shadow7099/sin-city-fest/issues"
+  },
+  "homepage": "https://github.com/Shadow7099/sin-city-fest#readme"
+}

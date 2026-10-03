@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Sin City Fest</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-red: #E63946;
+            --secondary-yellow: #F4D03F;
+            --dark-bg: #1A1A1A;
+            --cream: #E8DCC0;
+        }
+
+        body {
+            font-family: 'Bebas Neue', Arial, sans-serif;
+            background: #1A1A1A;
+            color: var(--cream);
+            padding: 20px;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="2" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="3"/></filter><rect width="400" height="400" fill="%231A1A1A" filter="url(%23noise)"/></svg>');
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-red), var(--secondary-yellow));
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: var(--dark-bg);
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .admin-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .panel-section {
+            background: rgba(26, 26, 26, 0.95);
+            border: 3px solid var(--secondary-yellow);
+            padding: 25px;
+            border-radius: 8px;
+        }
+
+        .panel-section h2 {
+            color: var(--secondary-yellow);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--primary-red);
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: var(--secondary-yellow);
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--secondary-yellow);
+            color: var(--cream);
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: rgba(232, 220, 192, 0.5);
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            background: rgba(230, 57, 70, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button {
+            background: var(--primary-red);
+            color: var(--secondary-yellow);
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #FF4D4D;
+            transform: scale(1.05);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-danger {
+            background: #8B0000;
+            color: var(--secondary-yellow);
+        }
+
+        .btn-danger:hover {
+            background: #B00000;
+        }
+
+        .assets-list {
+            background: rgba(26, 26, 26, 0.95);
+            border: 3px solid var(--secondary-yellow);
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .assets-list h2 {
+            color: var(--secondary-yellow);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--primary-red);
+            padding-bottom: 10px;
+        }
+
+        .asset-item {
+            background: rgba(230, 57, 70, 0.1);
+            border: 2px solid var(--secondary-yellow);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .asset-info {
+            flex: 1;
+        }
+
+        .asset-type {
+            color: var(--secondary-yellow);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .asset-url {
+            color: rgba(232, 220, 192, 0.8);
+            font-size: 0.9rem;
+            word-break: break-all;
+            margin-top: 5px;
+        }
+
+        .asset-actions {
+            display: flex;
+            gap: 10px;
+            margin-left: 15px;
+        }
+
+        .asset-actions button {
+            padding: 8px 12px;
+            font-size: 0.9rem;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .success {
+            background: rgba(46, 125, 50, 0.3);
+            border: 2px solid #4CAF50;
+            color: #81C784;
+        }
+
+        .error {
+            background: rgba(139, 0, 0, 0.3);
+            border: 2px solid #F44336;
+            color: #EF5350;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--secondary-yellow);
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .back-link:hover {
+            text-shadow: 0 0 10px var(--secondary-yellow);
+        }
+
+        @media (max-width: 768px) {
+            .admin-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .asset-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .asset-actions {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">Volver al sitio</a>
+
+        <header>
+            <h1>ADMIN - SIN CITY FEST</h1>
+            <p id="status-info">Conectando a Supabase...</p>
+        </header>
+
+        <div id="message-container"></div>
+
+        <div class="admin-panel">
+            <div class="panel-section">
+                <h2>Imagen Principal</h2>
+                <form id="heroImageForm">
+                    <div class="form-group">
+                        <label for="imageUrl">URL de Imagen (demonios)</label>
+                        <input type="url" id="imageUrl" placeholder="https://ejemplo.com/imagen.png" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="imageAlt">Texto Alternativo</label>
+                        <input type="text" id="imageAlt" placeholder="Demonios Sin City Fest" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="imageDescription">Descripcion</label>
+                        <textarea id="imageDescription" placeholder="Describe la imagen..."></textarea>
+                    </div>
+                    <button type="submit">Guardar Imagen</button>
+                </form>
+            </div>
+
+            <div class="panel-section">
+                <h2>Tipografia</h2>
+                <form id="fontForm">
+                    <div class="form-group">
+                        <label for="fontName">Nombre de Fuente</label>
+                        <input type="text" id="fontName" placeholder="Ej: Bebas Neue" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fontType">Tipo</label>
+                        <select id="fontType" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="Google Fonts">Google Fonts</option>
+                            <option value="Custom">Custom</option>
+                            <option value="System">System</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fontUrl">URL de Fuente</label>
+                        <input type="url" id="fontUrl" placeholder="URL de la fuente">
+                    </div>
+                    <div class="form-group">
+                        <label for="fontUsage">Uso</label>
+                        <input type="text" id="fontUsage" placeholder="Ej: Titulos principales">
+                    </div>
+                    <button type="submit">Guardar Tipografia</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="assets-list">
+            <h2>Assets Guardados</h2>
+            <div id="assetsList">Cargando...</div>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://tpdormyzwodptmtdksrs.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwZG9ybXl6d29kcHRtdGRrc3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMzU4MjYsImV4cCI6MjEwNjYxMTgyNn0.elK5v13Ufz1ogpykGnE0713OuMha6f03djTnIgYJ7iY';
+
+        let supabase;
+        let isConnected = false;
+
+        async function initSupabase() {
+            try {
+                const { createClient } = window.supabase;
+                supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+                
+                const { data, error } = await supabase.from('assets').select('count', { count: 'exact' });
+                
+                if (error) throw error;
+                
+                isConnected = true;
+                document.getElementById('status-info').textContent = 'Conectado a Supabase';
+                document.getElementById('status-info').style.color = '#4CAF50';
+                
+                loadAssets();
+                setupEventListeners();
+            } catch (error) {
+                showMessage('Error de conexion: ' + error.message, 'error');
+            }
+        }
+
+        function showMessage(text, type = 'success') {
+            const container = document.getElementById('message-container');
+            const div = document.createElement('div');
+            div.className = `message ${type}`;
+            div.textContent = text;
+            container.appendChild(div);
+            
+            setTimeout(() => {
+                div.remove();
+            }, 4000);
+        }
+
+        function setupEventListeners() {
+            document.getElementById('heroImageForm').addEventListener('submit', handleHeroImageSubmit);
+            document.getElementById('fontForm').addEventListener('submit', handleFontSubmit);
+        }
+
+        async function handleHeroImageSubmit(e) {
+            e.preventDefault();
+            
+            const imageUrl = document.getElementById('imageUrl').value;
+            const imageAlt = document.getElementById('imageAlt').value;
+            const imageDescription = document.getElementById('imageDescription').value;
+
+            try {
+                const { data: existing } = await supabase
+                    .from('assets')
+                    .select('id')
+                    .eq('asset_type', 'hero_image')
+                    .limit(1);
+
+                let result;
+                if (existing && existing.length > 0) {
+                    result = await supabase
+                        .from('assets')
+                        .update({
+                            image_url: imageUrl,
+                            image_alt: imageAlt,
+                            description: imageDescription,
+                            updated_at: new Date()
+                        })
+                        .eq('asset_type', 'hero_image');
+                } else {
+                    result = await supabase
+                        .from('assets')
+                        .insert([{
+                            asset_type: 'hero_image',
+                            image_url: imageUrl,
+                            image_alt: imageAlt,
+                            description: imageDescription
+                        }]);
+                }
+
+                if (result.error) throw result.error;
+
+                showMessage('Imagen guardada correctamente', 'success');
+                document.getElementById('heroImageForm').reset();
+                loadAssets();
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+
+        async function handleFontSubmit(e) {
+            e.preventDefault();
+            
+            const fontName = document.getElementById('fontName').value;
+            const fontType = document.getElementById('fontType').value;
+            const fontUrl = document.getElementById('fontUrl').value;
+            const fontUsage = document.getElementById('fontUsage').value;
+
+            try {
+                const result = await supabase
+                    .from('typography_settings')
+                    .insert([{
+                        font_name: fontName,
+                        font_type: fontType,
+                        font_url: fontUrl,
+                        usage: fontUsage
+                    }]);
+
+                if (result.error) throw result.error;
+
+                showMessage('Tipografia guardada correctamente', 'success');
+                document.getElementById('fontForm').reset();
+                loadAssets();
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+
+        async function loadAssets() {
+            try {
+                const { data: assets, error: assetsError } = await supabase
+                    .from('assets')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (assetsError) throw assetsError;
+
+                const { data: fonts, error: fontsError } = await supabase
+                    .from('typography_settings')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (fontsError) throw fontsError;
+
+                let html = '';
+
+                if (assets && assets.length > 0) {
+                    assets.forEach(asset => {
+                        html += `
+                            <div class="asset-item">
+                                <div class="asset-info">
+                                    <div class="asset-type">${asset.asset_type}</div>
+                                    <div class="asset-url">${asset.image_url}</div>
+                                    <div style="color: rgba(232, 220, 192, 0.6); font-size: 0.8rem; margin-top: 5px;">
+                                        ${new Date(asset.created_at).toLocaleString()}
+                                    </div>
+                                </div>
+                                <div class="asset-actions">
+                                    <button class="btn-danger" onclick="deleteAsset(${asset.id})">Eliminar</button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                if (fonts && fonts.length > 0) {
+                    fonts.forEach(font => {
+                        html += `
+                            <div class="asset-item">
+                                <div class="asset-info">
+                                    <div class="asset-type">TIPOGRAFIA: ${font.font_name}</div>
+                                    <div class="asset-url">${font.font_type} - ${font.usage}</div>
+                                    <div style="color: rgba(232, 220, 192, 0.6); font-size: 0.8rem; margin-top: 5px;">
+                                        ${new Date(font.created_at).toLocaleString()}
+                                    </div>
+                                </div>
+                                <div class="asset-actions">
+                                    <button class="btn-danger" onclick="deleteFont(${font.id})">Eliminar</button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                if (!html) {
+                    html = '<p style="text-align: center; color: rgba(232, 220, 192, 0.6);">No hay assets guardados aun</p>';
+                }
+
+                document.getElementById('assetsList').innerHTML = html;
+            } catch (error) {
+                showMessage('Error al cargar assets: ' + error.message, 'error');
+            }
+        }
+
+        async function deleteAsset(id) {
+            if (!confirm('Eliminar este asset?')) return;
+
+            try {
+                const result = await supabase
+                    .from('assets')
+                    .delete()
+                    .eq('id', id);
+
+                if (result.error) throw result.error;
+
+                showMessage('Asset eliminado', 'success');
+                loadAssets();
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+
+        async function deleteFont(id) {
+            if (!confirm('Eliminar esta tipografia?')) return;
+
+            try {
+                const result = await supabase
+                    .from('typography_settings')
+                    .delete()
+                    .eq('id', id);
+
+                if (result.error) throw result.error;
+
+                showMessage('Tipografia eliminada', 'success');
+                loadAssets();
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+
+        window.addEventListener('load', initSupabase);
+    </script>
+</body>
+</html>
