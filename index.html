@@ -16,7 +16,7 @@
         }
 
         :root {
-            --color-red: #C41E3A;
+            --color-red: #E63946;
             --color-yellow: #F4D03F;
             --color-black: #1A1A1A;
             --color-cream: #E8DCC0;
@@ -47,7 +47,7 @@
         html, body {
             width: 100%;
             min-height: 100%;
-            background: #8B4545;
+            background: var(--color-red);
             color: var(--color-cream);
             font-family: 'LexieReadable-Bold', sans-serif;
             overflow-x: hidden;
@@ -73,6 +73,7 @@
             font-size: 1.5rem;
             color: var(--color-black);
             font-weight: bold;
+            z-index: 10;
         }
 
         .poster-frame::after {
@@ -83,6 +84,11 @@
             font-size: 1.5rem;
             color: var(--color-black);
             font-weight: bold;
+            z-index: 10;
+        }
+
+        .poster-bottom-bones {
+            position: relative;
         }
 
         .poster-bottom-bones::before {
@@ -93,6 +99,7 @@
             font-size: 1.5rem;
             color: var(--color-black);
             font-weight: bold;
+            z-index: 10;
         }
 
         .poster-bottom-bones::after {
@@ -103,6 +110,7 @@
             font-size: 1.5rem;
             color: var(--color-black);
             font-weight: bold;
+            z-index: 10;
         }
 
         .poster-inner {
@@ -186,12 +194,14 @@
             background: rgba(0, 0, 0, 0.5);
             border: 2px solid var(--color-cream);
             overflow: hidden;
+            position: relative;
         }
 
         #heroImageContainer img {
             width: 100%;
             height: 100%;
             object-fit: contain;
+            padding: 10px;
         }
 
         /* ============ INFO BOXES ============ */
@@ -552,29 +562,18 @@
 
     <!-- SCRIPTS -->
     <script>
-        const SUPABASE_URL = 'https://tpdormyzwodptmtdksrs.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwZG9ybXl6d29kcHRtdGRrc3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMzU4MjYsImV4cCI6MjEwNjYxMTgyNn0.elK5v13Ufz1ogpykGnE0713OuMha6f03djTnIgYJ7iY';
-        
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
+        // Cargar imagen de personajes directamente con URL
         async function loadHeroImage() {
             try {
-                const { data, error } = await supabase
-                    .from('assets')
-                    .select('image_url')
-                    .eq('asset_type', 'PERSONAJES 1')
-                    .single();
-
-                if (error) throw error;
-
-                if (data && data.image_url) {
-                    const container = document.getElementById('heroImageContainer');
-                    const img = document.createElement('img');
-                    img.src = data.image_url;
-                    img.alt = 'Personajes Sin City Fest';
-                    container.innerHTML = '';
-                    container.appendChild(img);
-                }
+                const url = 'https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/PERSONAJES%201.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L1BFUlNPTkFKRVMgMS53ZWJwIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc5MTA2NjE0OCwiZXhwIjoxODIyNjAyMTQ4fQ.ygwSzikB2IBP9wby4U9vEu2zGsUoVWWWydjhcJ4eBZIvq-nbbHeicVNCdtmpAYdOD6Z_s5pZktCY0ETltO6yDg';
+                
+                const container = document.getElementById('heroImageContainer');
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = 'Personajes Sin City Fest';
+                container.innerHTML = '';
+                container.appendChild(img);
+                console.log('Personajes cargados exitosamente');
             } catch (error) {
                 console.error('Error al cargar imagen:', error);
             }
