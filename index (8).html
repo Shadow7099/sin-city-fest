@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIN CITY FEST - Halloween Edition 2024</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1a1a1a;
+            color: #E8DCC0;
+            overflow-x: hidden;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        nav {
+            background: rgba(26, 26, 26, 0.98);
+            padding: 1.2rem 2rem;
+            border-bottom: 5px double #F4D03F;
+            position: sticky;
+            top: 0;
+            z-index: 150;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-nav {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #F4D03F;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 3px 3px 0px #E63946;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #E8DCC0;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero-poster {
+            background: rgba(42, 42, 42, 0.9);
+            border: 5px solid #F4D03F;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.85;
+            margin: 1rem 0 2rem;
+            letter-spacing: 2px;
+        }
+
+        .title-line1 {
+            color: #E8DCC0;
+            text-shadow: 4px 4px 0px #E63946;
+            display: block;
+        }
+
+        .title-line2 {
+            color: #F4D03F;
+            text-shadow: 5px 5px 0px #E63946;
+            display: block;
+        }
+
+        #heroImageContainer {
+            margin: 2rem 0;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #heroImageContainer img {
+            max-width: 100%;
+            height: auto;
+            max-height: 400px;
+        }
+
+        .event-info {
+            background: rgba(230, 57, 70, 0.1);
+            border: 3px solid #E63946;
+            padding: 2rem;
+            margin: 2rem 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #F4D03F;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .info-value {
+            font-size: 1.5rem;
+            color: #E8DCC0;
+            margin-top: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .prize-banner {
+            background: linear-gradient(135deg, #E63946, #F77F00);
+            color: #E8DCC0;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            border: 3px solid #F4D03F;
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .pricing-section {
+            margin: 3rem 0;
+        }
+
+        .pricing-title {
+            font-size: 2.5rem;
+            color: #F4D03F;
+            text-shadow: 3px 3px 0px #E63946;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .price-card {
+            background: rgba(42, 42, 42, 0.9);
+            border: 3px solid #F4D03F;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .price-type {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #F4D03F;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .price-stage {
+            font-size: 0.9rem;
+            color: #E8DCC0;
+            margin: 0.5rem 0;
+        }
+
+        .price-amount {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #E63946;
+        }
+
+        footer {
+            background: rgba(26, 26, 26, 0.98);
+            padding: 2rem;
+            border-top: 5px double #F4D03F;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .loading-message {
+            text-align: center;
+            padding: 2rem;
+            color: #F4D03F;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <div class="logo-nav">SIN CITY FEST</div>
+            <div class="nav-links">
+                <a href="#precios">Precios</a>
+                <a href="#contacto">Contacto</a>
+                <a href="admin.html">Admin</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero-poster">
+            <h1>
+                <span class="title-line1">SIN CITY</span>
+                <span class="title-line2">FEST</span>
+            </h1>
+
+            <div id="heroImageContainer" class="loading-message">
+                Cargando personajes...
+            </div>
+        </section>
+
+        <div class="event-info">
+            <div class="info-item">
+                <div class="info-label">FECHA</div>
+                <div class="info-value">VIE 30<br>OCTUBRE</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">APERTURA</div>
+                <div class="info-value">7:00 PM</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">LUGAR</div>
+                <div class="info-value">HACIENDA EL<br>ENCANTO</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">ENTRETENIMIENTO</div>
+                <div class="info-value">LOCAL DJs<br>ATRACCIONES</div>
+            </div>
+        </div>
+
+        <div class="prize-banner">
+            $7 MILLONES EN PREMIOS<br>
+            <span style="font-size: 1.2rem;">A LOS MEJORES DISFRACES</span>
+        </div>
+
+        <section class="pricing-section" id="precios">
+            <h2 class="pricing-title">ENTRADAS Y PRECIOS</h2>
+
+            <h3 style="color: #F4D03F; text-align: center; margin-top: 2rem; margin-bottom: 1rem;">ACCESO GENERAL</h3>
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <div class="price-type">ETAPA 1</div>
+                    <div class="price-stage">Primeros Compradores</div>
+                    <div class="price-amount">$25.000</div>
+                </div>
+                <div class="price-card">
+                    <div class="price-type">ETAPA 2</div>
+                    <div class="price-stage">Segunda Ronda</div>
+                    <div class="price-amount">$30.000</div>
+                </div>
+                <div class="price-card">
+                    <div class="price-type">ETAPA 3</div>
+                    <div class="price-stage">Últimas Entradas</div>
+                    <div class="price-amount">$35.000</div>
+                </div>
+            </div>
+
+            <h3 style="color: #F4D03F; text-align: center; margin-top: 2rem; margin-bottom: 1rem;">ACCESO VIP</h3>
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <div class="price-type">ETAPA 1</div>
+                    <div class="price-stage">Primeros Compradores</div>
+                    <div class="price-amount">$35.000</div>
+                </div>
+                <div class="price-card">
+                    <div class="price-type">ETAPA 2</div>
+                    <div class="price-stage">Segunda Ronda</div>
+                    <div class="price-amount">$40.000</div>
+                </div>
+                <div class="price-card">
+                    <div class="price-type">ETAPA 3</div>
+                    <div class="price-stage">Últimas Entradas</div>
+                    <div class="price-amount">$45.000</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer id="contacto">
+        <h2 style="color: #F4D03F; margin-bottom: 1rem;">SIN CITY FEST</h2>
+        <p style="margin: 1rem 0; font-size: 1.2rem;">Hacienda El Encanto</p>
+        <p style="margin: 1rem 0; font-size: 1.2rem;">Viernes 30 de Octubre • 7:00 PM</p>
+        <p style="margin: 1rem 0; font-size: 1.2rem;">@SINCITY.FEST</p>
+        <p style="margin-top: 2rem; font-size: 0.9rem; color: rgba(232, 220, 192, 0.7);">Diseño por Midia Studio 2024</p>
+    </footer>
+
+    <script>
+        const SUPABASE_URL = 'https://tpdormyzwodptmtdksrs.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwZG9ybXl6d29kcHRtdGRrc3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMzU4MjYsImV4cCI6MjEwNjYxMTgyNn0.elK5v13Ufz1ogpykGnE0713OuMha6f03djTnIgYJ7iY';
+        
+        let supabase;
+
+        async function initSupabase() {
+            try {
+                if (!window.supabase) {
+                    console.log('Supabase no disponible');
+                    return;
+                }
+                
+                const { createClient } = window.supabase;
+                supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+                
+                console.log('Supabase inicializado');
+                
+                await loadFonts();
+                await loadBackgroundImage();
+                await loadHeroImage();
+            } catch (error) {
+                console.error('Error en Supabase:', error);
+            }
+        }
+
+        async function loadFonts() {
+            try {
+                const { data } = await supabase
+                    .from('typography_settings')
+                    .select('font_name, font_url');
+
+                if (data && data.length > 0) {
+                    const styleSheet = document.createElement('style');
+                    let fontFaces = '';
+
+                    data.forEach(font => {
+                        if (font.font_url) {
+                            fontFaces += `
+                                @font-face {
+                                    font-family: '${font.font_name}';
+                                    src: url('${font.font_url}') format('truetype');
+                                    font-weight: normal;
+                                }
+                            `;
+                        }
+                    });
+
+                    if (fontFaces) {
+                        styleSheet.textContent = fontFaces;
+                        document.head.appendChild(styleSheet);
+                        console.log('Tipografías cargadas');
+                    }
+                }
+            } catch (error) {
+                console.log('Error cargando tipografías');
+            }
+        }
+
+        async function loadBackgroundImage() {
+            try {
+                const { data } = await supabase
+                    .from('assets')
+                    .select('image_url')
+                    .eq('asset_type', 'recuadro')
+                    .limit(1)
+                    .single();
+
+                if (data && data.image_url) {
+                    document.body.style.backgroundImage = `url('${data.image_url}')`;
+                    console.log('Fondo cargado');
+                }
+            } catch (error) {
+                console.log('Error cargando fondo');
+            }
+        }
+
+        async function loadHeroImage() {
+            try {
+                const { data } = await supabase
+                    .from('assets')
+                    .select('image_url, image_alt')
+                    .eq('asset_type', 'Personajes 1')
+                    .limit(1)
+                    .single();
+
+                if (data && data.image_url) {
+                    const container = document.getElementById('heroImageContainer');
+                    container.innerHTML = `<img src="${data.image_url}" alt="${data.image_alt || 'Personajes'}">`;
+                    console.log('Imagen de personajes cargada');
+                }
+            } catch (error) {
+                console.log('Error cargando imagen de personajes');
+            }
+        }
+
+        // Iniciar cuando esté listo
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initSupabase);
+        } else {
+            initSupabase();
+        }
+    </script>
+</body>
+</html>
