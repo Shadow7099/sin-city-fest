@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sin City Fest - Halloween Edition 2026</title>
+    <title>Comprar Boletas - Sin City Fest 2026</title>
     
-    <!-- Supabase Script -->
-    <script async src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Bold Checkout Script -->
+    <script src="https://checkout.bold.com/bold-checkout.js"></script>
     
     <style>
         * {
@@ -20,28 +20,18 @@
             --color-yellow: #F4D03F;
             --color-black: #1A1A1A;
             --color-cream: #E8DCC0;
-            --color-orange: #F77F00;
         }
 
-        /* TIPOGRAFÍAS */
         @font-face {
             font-family: 'Barbra-Regular';
             src: url('https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/Barbra-Regular.otf?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L0JhcmJyYS1SZWd1bGFyLm90ZiIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3OTEwNDQ2OTYsImV4cCI6MTgyMjU4MDY5Nn0.jR0luJ2XcTGUXLwEe0I-nCTx4UDVcvoBAenS9bLZopnGTA0UCSFyDQ6XnDcQZsc2poGRZqwVQVD2CBebW1w99g') format('opentype');
             font-weight: 400;
-            font-style: normal;
         }
 
         @font-face {
             font-family: 'LexieReadable-Bold';
             src: url('https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/LexieReadable-Bold.ttf?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L0xleGllUmVhZGFibGUtQm9sZC50dGYiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkxMDQ0NzEzLCJleHAiOjE4MjI1ODA3MTN9.ffDyupRpB1FlCCxas35agP6dI0YAvDZ-GPfE5c500mbbKJQZ-aqFZld0dueF1UOZoc60GL3uAPhGna-uxB96xQ') format('truetype');
             font-weight: 700;
-            font-style: normal;
-        }
-
-        /* EFECTO GRANULADO */
-        @keyframes grain {
-            0% { background-position: 0 0; }
-            100% { background-position: 256px 256px; }
         }
 
         html, body {
@@ -51,10 +41,10 @@
             color: var(--color-cream);
             font-family: 'LexieReadable-Bold', sans-serif;
             overflow-x: hidden;
-            padding: 80px 40px;
+            padding: 40px 20px;
         }
 
-        /* CONTENEDOR PRINCIPAL CON MARCO BLANCO DELGADO */
+        /* MARCO ESTILO LANDING */
         .poster-frame {
             max-width: 950px;
             margin: 0 auto;
@@ -64,7 +54,6 @@
             box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
         }
 
-        /* HUESOS DECORATIVOS EN ESQUINAS */
         .poster-frame::before {
             content: '✕';
             position: absolute;
@@ -87,33 +76,7 @@
             z-index: 10;
         }
 
-        .poster-bottom-bones {
-            position: relative;
-        }
-
-        .poster-bottom-bones::before {
-            content: '✕';
-            position: absolute;
-            bottom: 8px;
-            left: 20px;
-            font-size: 1.5rem;
-            color: var(--color-black);
-            font-weight: bold;
-            z-index: 10;
-        }
-
-        .poster-bottom-bones::after {
-            content: '✕';
-            position: absolute;
-            bottom: 8px;
-            right: 20px;
-            font-size: 1.5rem;
-            color: var(--color-black);
-            font-weight: bold;
-            z-index: 10;
-        }
-
-        .poster-inner {
+        .checkout-container {
             background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
             padding: 50px 45px;
             position: relative;
@@ -121,8 +84,7 @@
             overflow: hidden;
         }
 
-        /* TEXTURA GRANULADA */
-        .poster-inner::before {
+        .checkout-container::before {
             content: '';
             position: absolute;
             top: 0;
@@ -137,482 +99,365 @@
             pointer-events: none;
         }
 
-        .poster-content {
+        .checkout-content {
             position: relative;
             z-index: 1;
         }
 
-        /* ============ TÍTULO ============ */
-        .title-section {
+        .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--color-cream);
+            padding-bottom: 20px;
         }
 
-        .main-title {
+        .header h1 {
             font-family: 'Barbra-Regular', serif;
-            font-size: 5.5rem;
-            font-weight: 400;
-            letter-spacing: -1px;
-            line-height: 1;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: baseline;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .title-part-1 {
+            font-size: 3.5rem;
             color: var(--color-cream);
             text-shadow: 3px 3px 0 var(--color-black);
+            margin-bottom: 10px;
         }
 
-        .title-part-2 {
+        .header p {
             color: var(--color-yellow);
-            text-shadow: 3px 3px 0 var(--color-black);
-            transform: skewY(-5deg);
+            font-size: 1.1rem;
+            text-shadow: 2px 2px 0 var(--color-black);
         }
 
-        .subtitle {
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 12px 30px;
+            background: var(--color-yellow);
+            color: var(--color-red);
+            text-decoration: none;
+            font-family: 'Barbra-Regular', serif;
+            font-weight: bold;
+            font-size: 1rem;
+            border: 2px solid var(--color-black);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 3px 3px 0 var(--color-black);
+        }
+
+        .back-button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 var(--color-black);
+        }
+
+        .form-section {
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed var(--color-cream);
+        }
+
+        .form-section h2 {
             font-family: 'LexieReadable-Bold', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 700;
+            font-size: 1.4rem;
             color: var(--color-yellow);
             text-shadow: 2px 2px 0 var(--color-black);
-            letter-spacing: 3px;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
-        /* ============ IMAGEN HERO ============ */
-        #heroImageContainer {
-            width: 100%;
-            height: 600px;
-            margin: 0;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            background: transparent;
-            border: none;
-            overflow: hidden;
-            position: relative;
-        }
-
-        #heroImageContainer img {
-            width: auto;
-            height: 100%;
-            object-fit: contain;
-            padding: 0;
-        }
-
-        /* ============ IMAGEN PERSONAJES 2 ============ */
-        #heroImageContainer2 {
-            width: 100%;
-            height: 600px;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: transparent;
-            border: none;
-            overflow: hidden;
-            position: relative;
-        }
-
-        #heroImageContainer2 img {
-            width: auto;
-            height: 100%;
-            object-fit: contain;
-            padding: 0;
-        }
-
-        /* ============ INFO BOXES ============ */
-        .date-boxes {
-            position: relative;
-            display: flex;
+        .form-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
-            justify-content: space-between;
             margin-bottom: 20px;
-            flex-wrap: wrap;
         }
 
-        .date-box {
-            background: var(--color-red);
-            border: 3px solid white;
-            padding: 12px 20px;
-            text-align: center;
-            min-width: 120px;
+        .form-group.full {
+            grid-template-columns: 1fr;
         }
 
-        .date-box-label {
-            font-family: 'LexieReadable-Bold', sans-serif;
-            font-size: 0.75rem;
+        label {
+            display: block;
+            margin-bottom: 8px;
             color: var(--color-cream);
-            font-weight: 700;
+            font-family: 'LexieReadable-Bold', sans-serif;
+            font-weight: bold;
+            font-size: 0.95rem;
             letter-spacing: 1px;
         }
 
-        .date-box-value {
-            font-family: 'Barbra-Regular', serif;
-            font-size: 1.8rem;
-            font-weight: 400;
-            color: var(--color-yellow);
-            text-shadow: 2px 2px 0 var(--color-black);
-            line-height: 1.1;
-        }
-
-        /* ============ UBICACIÓN Y ENTRETENIMIENTO ============ */
-        .location-entertainment {
-            text-align: center;
-            margin-bottom: 25px;
-            padding: 18px 0;
-            border-bottom: 2px solid var(--color-cream);
-        }
-
-        .location-title {
-            font-family: 'LexieReadable-Bold', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 700;
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--color-cream);
+            background: rgba(0, 0, 0, 0.5);
             color: var(--color-cream);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 8px;
+            font-family: 'LexieReadable-Bold', sans-serif;
+            font-size: 1rem;
+            border-radius: 0;
         }
 
-        .location-text {
-            font-family: 'LexieReadable-Bold', sans-serif;
-            font-size: 0.95rem;
-            color: var(--color-yellow);
-            font-weight: 700;
+        input::placeholder {
+            color: rgba(232, 220, 192, 0.5);
         }
 
-        .entertainment {
-            font-family: 'LexieReadable-Bold', sans-serif;
-            font-size: 0.95rem;
+        select option {
+            background: var(--color-black);
             color: var(--color-cream);
-            font-weight: 700;
-            margin-top: 8px;
-        }
-
-        .entertainment strong {
-            color: var(--color-yellow);
-        }
-
-        /* ============ PRICING GRID ============ */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 45px;
-            margin-bottom: 35px;
-            padding-bottom: 35px;
-        }
-
-        .pricing-column {
-            text-align: center;
-        }
-
-        .access-title {
             font-family: 'LexieReadable-Bold', sans-serif;
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--color-red);
-            text-shadow: 2px 2px 0 var(--color-yellow);
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
         }
 
-        .pricing-grid .access-title:last-of-type {
-            color: var(--color-yellow);
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--color-yellow);
+            box-shadow: 0 0 10px rgba(244, 208, 63, 0.5);
         }
 
-        .price-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        .price-summary {
+            background: var(--color-red);
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 3px solid white;
         }
 
         .price-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            font-family: 'LexieReadable-Bold', sans-serif;
-            font-weight: 700;
-            color: var(--color-cream);
-            padding: 6px 0;
-            border-bottom: 1px dashed var(--color-cream);
-            font-size: 0.95rem;
-        }
-
-        .price-label {
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .price-amount {
-            color: var(--color-yellow);
+            margin-bottom: 10px;
             font-size: 1.1rem;
-            font-family: 'Barbra-Regular', serif;
-            font-weight: 400;
-            text-shadow: 1px 1px 0 var(--color-black);
+            color: var(--color-cream);
+            font-family: 'LexieReadable-Bold', sans-serif;
         }
 
-        /* ============ PREMIO BANNER ============ */
-        .prize-banner {
-            background: var(--color-yellow);
-            padding: 18px;
-            margin: 35px 0;
-            text-align: center;
-            border: 3px solid var(--color-black);
-        }
-
-        .prize-text {
+        .price-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.5rem;
             font-family: 'Barbra-Regular', serif;
-            font-size: 1.85rem;
-            font-weight: 400;
-            color: var(--color-red);
+            font-weight: bold;
+            border-top: 2px solid white;
+            padding-top: 10px;
+            margin-top: 10px;
+            color: var(--color-yellow);
             text-shadow: 2px 2px 0 var(--color-black);
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        /* ============ BOTONES COMPRA ============ */
-        .buy-section {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 30px 0;
-            border-bottom: 2px dashed var(--color-cream);
-        }
-
-        .buy-button {
+        .checkout-button {
+            width: 100%;
+            padding: 15px;
             background: var(--color-yellow);
-            border: 3px solid var(--color-black);
-            padding: 15px 40px;
-            font-family: 'Barbra-Regular', serif;
-            font-size: 1.6rem;
-            font-weight: 400;
             color: var(--color-red);
+            border: 3px solid var(--color-black);
+            font-family: 'Barbra-Regular', serif;
+            font-size: 1.3rem;
+            font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 2px;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 4px 4px 0 var(--color-black);
-            text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
-            display: inline-block;
-            margin: 0 10px;
         }
 
-        .buy-button:hover {
+        .checkout-button:hover {
             transform: translate(-2px, -2px);
             box-shadow: 6px 6px 0 var(--color-black);
         }
 
-        /* ============ FOOTER ============ */
-        .footer-section {
-            text-align: center;
-            padding-top: 25px;
-            border-top: 2px solid var(--color-cream);
+        .checkout-button:disabled {
+            background: #999;
+            cursor: not-allowed;
+            transform: none;
         }
 
-        .footer-title {
-            font-family: 'LexieReadable-Bold', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--color-cream);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 12px;
+        #bold-checkout {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px dashed var(--color-cream);
         }
 
-        .footer-text {
-            font-family: 'LexieReadable-Bold', sans-serif;
-            font-size: 0.9rem;
-            color: var(--color-cream);
-            font-weight: 700;
-            letter-spacing: 1px;
+        @keyframes grain {
+            0% { background-position: 0 0; }
+            100% { background-position: 256px 256px; }
         }
 
-        .warning-text {
-            color: var(--color-yellow);
-            margin-top: 15px;
-            font-size: 0.85rem;
-        }
-
-        /* ============ RESPONSIVE ============ */
         @media (max-width: 768px) {
-            html, body {
-                padding: 40px 15px;
-            }
-
-            .poster-frame {
-                padding: 10px;
-            }
-
-            .poster-inner {
-                padding: 25px 18px;
-            }
-
-            .main-title {
-                font-size: 3rem;
-            }
-
-            .pricing-grid {
+            .form-group {
                 grid-template-columns: 1fr;
-                gap: 25px;
             }
 
-            .date-boxes {
-                flex-direction: column;
-                align-items: center;
+            .header h1 {
+                font-size: 2.5rem;
             }
 
-            .prize-text {
-                font-size: 1.4rem;
-            }
-
-            .buy-button {
-                font-size: 1.2rem;
-                padding: 12px 30px;
+            .checkout-container {
+                padding: 25px;
             }
         }
     </style>
 </head>
 <body>
     <div class="poster-frame">
-        <div class="poster-inner">
-            <div class="poster-content">
-                <!-- TÍTULO -->
-                <div class="title-section">
-                    <div class="main-title">
-                        <span class="title-part-1">SIN CITY</span>
-                        <span class="title-part-2">FEST</span>
-                    </div>
-                    <div class="subtitle">Halloween Edition</div>
+        <div class="checkout-container">
+            <div class="checkout-content">
+                <a href="index.html" class="back-button">← Volver</a>
+
+                <div class="header">
+                    <h1>COMPRAR BOLETAS</h1>
+                    <p>Sin City Fest - Halloween Edition</p>
                 </div>
 
-                <!-- IMAGEN HERO -->
-                <div id="heroImageContainer"></div>
-
-                <!-- FECHA Y HORA -->
-                <div class="date-boxes">
-                    <div class="date-box">
-                        <div class="date-box-label">VIE</div>
-                        <div class="date-box-value">30<br>OCT</div>
-                    </div>
-                    <div class="date-box">
-                        <div class="date-box-label">OPEN</div>
-                        <div class="date-box-value">7 PM<br>DOORS</div>
-                    </div>
+        <div class="form-section">
+            <h2>Selecciona tu Boleta</h2>
+            
+            <div class="form-group">
+                <div>
+                    <label for="ticket-type">Tipo de Acceso:</label>
+                    <select id="ticket-type" onchange="calcularPrecio()">
+                        <option value="">Selecciona un tipo...</option>
+                        <option value="general">General Access</option>
+                        <option value="vip">VIP Access</option>
+                    </select>
                 </div>
 
-                <!-- UBICACIÓN Y ENTRETENIMIENTO -->
-                <div class="location-entertainment">
-                    <div class="location-title">HACIENDA EL ENCANTO</div>
-                    <div class="location-text">KM 5.5 VÍA SUBA-COTA</div>
-                    <div class="entertainment">
-                        <strong>SPECIAL LOCAL DJS LINEUP</strong> x <strong>ATRACCIONES</strong>
-                    </div>
+                <div>
+                    <label for="ticket-stage">Etapa de Venta:</label>
+                    <select id="ticket-stage" onchange="calcularPrecio()">
+                        <option value="">Selecciona etapa...</option>
+                        <option value="1">Etapa 1</option>
+                        <option value="2">Etapa 2</option>
+                        <option value="3">Etapa 3</option>
+                    </select>
                 </div>
+            </div>
 
-                <!-- IMAGEN PERSONAJES 2 -->
-                <div id="heroImageContainer2"></div>
-
-                <!-- PRECIOS -->
-                <div class="pricing-grid">
-                    <div class="pricing-column">
-                        <div class="access-title">General Access:</div>
-                        <div class="price-list">
-                            <div class="price-item">
-                                <span class="price-label">Etapa 1:</span>
-                                <span class="price-amount">$25K</span>
-                            </div>
-                            <div class="price-item">
-                                <span class="price-label">Etapa 2:</span>
-                                <span class="price-amount">$30K</span>
-                            </div>
-                            <div class="price-item">
-                                <span class="price-label">Etapa 3:</span>
-                                <span class="price-amount">$35K</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="pricing-column">
-                        <div class="access-title">VIP Access:</div>
-                        <div class="price-list">
-                            <div class="price-item">
-                                <span class="price-label">Etapa 1:</span>
-                                <span class="price-amount">$35K</span>
-                            </div>
-                            <div class="price-item">
-                                <span class="price-label">Etapa 2:</span>
-                                <span class="price-amount">$40K</span>
-                            </div>
-                            <div class="price-item">
-                                <span class="price-label">Etapa 3:</span>
-                                <span class="price-amount">$45K</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- BOTONES COMPRA -->
-                <div class="buy-section">
-                    <button class="buy-button" onclick="window.location.href='checkout.html'">Comprar Boletas</button>
-                </div>
-
-                <!-- FOOTER -->
-                <div class="footer-section">
-                    <div class="footer-title">Info & Tickets:</div>
-                    <div class="footer-text">@SKYLINE.FEST</div>
-                    <div class="footer-text warning-text" style="margin-top: 15px;">
-                        NOS RESERVAMOS EL DERECHO DE ADMISIÓN Y PERMANENCIA
-                    </div>
+            <div class="form-group">
+                <div>
+                    <label for="quantity">Cantidad de Boletas:</label>
+                    <input type="number" id="quantity" value="1" min="1" max="10" onchange="calcularPrecio()">
                 </div>
             </div>
         </div>
-        <div class="poster-bottom-bones"></div>
+
+        <div class="form-section">
+            <h2>Datos Personales</h2>
+            
+            <div class="form-group">
+                <div>
+                    <label for="nombre">Nombre Completo:</label>
+                    <input type="text" id="nombre" placeholder="Tu nombre" required>
+                </div>
+
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" placeholder="tu@email.com" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    <label for="telefono">Teléfono:</label>
+                    <input type="tel" id="telefono" placeholder="+57 300 0000000" required>
+                </div>
+
+                <div>
+                    <label for="documento">Documento (CC/Pasaporte):</label>
+                    <input type="text" id="documento" placeholder="1234567890" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="price-summary">
+            <div class="price-item">
+                <span>Precio Unitario:</span>
+                <span id="unit-price">$0</span>
+            </div>
+            <div class="price-item">
+                <span>Cantidad:</span>
+                <span id="qty-display">1</span>
+            </div>
+            <div class="price-total">
+                <span>TOTAL:</span>
+                <span id="total-price">$0</span>
+            </div>
+        </div>
+
+        <button class="checkout-button" onclick="procesarPago()">Proceder al Pago con Bold</button>
+
+                <div id="bold-checkout"></div>
+            </div>
+        </div>
     </div>
 
-    <!-- SCRIPTS -->
     <script>
-        // Cargar imagen de personajes directamente con URL
-        async function loadHeroImage() {
-            try {
-                const url = 'https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/PERSONAJES%201.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L1BFUlNPTkFKRVMgMS53ZWJwIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc5MTA2ODI5MywiZXhwIjoxODIyNjA0MjkzfQ.BVkZR8XlKvEyorewbKul6LA5FC1Ljl4vZ3pmafgPRO1x0AzLFPF1JD_P14ZSm1Hm_kWedJuzN9N9nScYF97Y0g';
-                
-                const container = document.getElementById('heroImageContainer');
-                const img = document.createElement('img');
-                img.src = url;
-                img.alt = 'Personajes Sin City Fest';
-                container.innerHTML = '';
-                container.appendChild(img);
-                console.log('Personajes 1 cargados exitosamente');
-            } catch (error) {
-                console.error('Error al cargar imagen:', error);
+        const precios = {
+            general: { 1: 25000, 2: 30000, 3: 35000 },
+            vip: { 1: 35000, 2: 40000, 3: 45000 }
+        };
+
+        function calcularPrecio() {
+            const type = document.getElementById('ticket-type').value;
+            const stage = document.getElementById('ticket-stage').value;
+            const quantity = parseInt(document.getElementById('quantity').value) || 1;
+
+            let unitPrice = 0;
+            if (type && stage && precios[type][stage]) {
+                unitPrice = precios[type][stage];
             }
+
+            const total = unitPrice * quantity;
+
+            document.getElementById('unit-price').textContent = '$' + unitPrice.toLocaleString();
+            document.getElementById('qty-display').textContent = quantity;
+            document.getElementById('total-price').textContent = '$' + total.toLocaleString();
         }
 
-        // Cargar segunda imagen de personajes
-        async function loadHeroImage2() {
-            try {
-                const url = 'https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/image_2026-10-03_174844997.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L2ltYWdlXzIwMjYtMTAtMDNfMTc0ODQ0OTk3LndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkxMDY4MzA1LCJleHAiOjE4MjI2MDQzMDV9.EqqOcnV5IhwD7mn8aMA-kRr3wLfZEKq8t4NepLdukfcye6ndiD6Ic8rSRi6f4AgPze2u2gWEtjUGmRrOOKEBew';
-                
-                const container = document.getElementById('heroImageContainer2');
-                const img = document.createElement('img');
-                img.src = url;
-                img.alt = 'Personajes Sin City Fest 2';
-                container.innerHTML = '';
-                container.appendChild(img);
-                console.log('Personajes 2 cargados exitosamente');
-            } catch (error) {
-                console.error('Error al cargar imagen 2:', error);
+        function procesarPago() {
+            const tipo = document.getElementById('ticket-type').value;
+            const etapa = document.getElementById('ticket-stage').value;
+            const cantidad = document.getElementById('quantity').value;
+            const nombre = document.getElementById('nombre').value;
+            const email = document.getElementById('email').value;
+            const telefono = document.getElementById('telefono').value;
+            const documento = document.getElementById('documento').value;
+
+            // Validar campos
+            if (!tipo || !etapa || !nombre || !email || !telefono || !documento) {
+                alert('Por favor completa todos los campos');
+                return;
             }
+
+            const total = (precios[tipo][etapa] * cantidad);
+
+            // Aquí se integra con Bold
+            // Necesitas tu PUBLIC_KEY de Bold para inicializar el checkout
+            // Para implementar, necesitas:
+            // 1. Tu PUBLIC_KEY de Bold
+            // 2. Crear una orden en tu backend que retorne el TOKEN de Bold
+
+            console.log('Datos de la orden:', {
+                tipo,
+                etapa,
+                cantidad,
+                nombre,
+                email,
+                telefono,
+                documento,
+                total
+            });
+
+            // Simulación - En producción, esto vendría de tu backend
+            const orderId = 'SIN_CITY_' + Date.now();
+            
+            alert(`Orden creada: ${orderId}\nTotal: $${total.toLocaleString()}\n\nIntegración con Bold configurando...`);
+            
+            // Aquí irá la integración real con Bold:
+            // window.boldCheckout.openCheckout({
+            //     publicKey: 'TU_PUBLIC_KEY',
+            //     orderId: orderId,
+            //     onClose: function() {},
+            //     onPaymentComplete: function() {}
+            // });
         }
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            await loadHeroImage();
-            await loadHeroImage2();
-        });
+        // Inicializar precios
+        calcularPrecio();
     </script>
 </body>
 </html>
