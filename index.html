@@ -379,6 +379,29 @@
             border-bottom: 2px dashed var(--color-cream);
         }
 
+        .map-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .map-location-title {
+            font-family: 'Barbra-Regular', serif;
+            font-size: 2rem;
+            color: var(--color-cream);
+            text-shadow: 3px 3px 0 var(--color-black);
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .map-location-address {
+            font-family: 'LexieReadable-Bold', sans-serif;
+            font-size: 1.1rem;
+            color: var(--color-red);
+            text-shadow: 2px 2px 0 var(--color-black);
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
         #eventMapContainer {
             width: 100%;
             display: flex;
@@ -591,6 +614,14 @@
                 padding: 15px 0;
             }
 
+            .map-location-title {
+                font-size: 1.5rem;
+            }
+
+            .map-location-address {
+                font-size: 0.95rem;
+            }
+
             .date-boxes {
                 flex-direction: column;
                 align-items: center;
@@ -684,6 +715,10 @@
 
                 <!-- MAPA DEL EVENTO -->
                 <div class="event-map-section">
+                    <div class="map-header">
+                        <div class="map-location-title">HACIENDA EL ENCANTO</div>
+                        <div class="map-location-address">KM 5.5 VÍA SUBA-COTA</div>
+                    </div>
                     <div id="eventMapContainer"></div>
                 </div>
 
@@ -788,7 +823,7 @@
         // Cargar mapa del evento
         async function loadEventMap() {
             try {
-                const url = 'https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/Untitled-2.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L1VudGl0bGVkLTIud2VicCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3OTExNzYyODksImV4cCI6MTgyMjcxMjI4OX0.NEkVsfZmODFv_5cPCVgrVVvlYQuAkT09LtllokSAFada9_ic0655NDNzeBHpXpghJB3Ph050meHnmDzPQ';
+                const url = 'https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/Untitled-2.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L1VudGl0bGVkLTIud2VicCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3OTExNzY1MDAsImV4cCI6MTgyMjcxMjUwMH0.PxPime5WxGeyxNzKAs_ahTNFQKfxr2S6nqDEzIVl-9FzWDjfINqw1k-F3cCAqBgoyIPQpcPycN0HWfo6K8vjqQ';
                 
                 const container = document.getElementById('eventMapContainer');
                 const img = document.createElement('img');
