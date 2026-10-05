@@ -114,14 +114,14 @@
         }
 
         .poster-inner {
-            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            background: url('https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/SIN%20CITY%20MAPA%20POST.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L1NJTiBDSVRZIE1BUEEgUE9TVC53ZWJwIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc5MTE3NTcxMCwiZXhwIjoxODIyNzExNzEwfQ.muwNPOP2qD1xLVt9tizxsWbKqd1-PLLbCWm80fT6EgrVyApSQz37qAQqFa2enIVv299CxM-66kvY8aUOoLiTwQ') center/cover no-repeat;
             padding: 50px 45px;
             position: relative;
             border: 2px solid var(--color-black);
             overflow: hidden;
         }
 
-        /* TEXTURA GRANULADA */
+        /* OVERLAY OSCURO SOBRE MAPA */
         .poster-inner::before {
             content: '';
             position: absolute;
@@ -129,10 +129,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise" /></filter><rect width="256" height="256" fill="%23000000" opacity="0.08" filter="url(%23noise)"/></svg>');
-            background-size: 256px 256px;
-            animation: grain 8s steps(10) infinite;
+            background: rgba(0, 0, 0, 0.6);
             z-index: 0;
             pointer-events: none;
         }
@@ -375,6 +372,32 @@
             letter-spacing: 1px;
         }
 
+        /* ============ MAPA DEL EVENTO ============ */
+        .event-map-section {
+            margin-bottom: 35px;
+            padding: 20px 0;
+            border-bottom: 2px dashed var(--color-cream);
+        }
+
+        #eventMapContainer {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #eventMapContainer img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            padding: 0;
+            display: block;
+        }
+
         /* ============ PREMIOS Y COSTUMOS ============ */
         .awards-section {
             margin-bottom: 35px;
@@ -563,6 +586,11 @@
                 font-size: 1.2rem;
             }
 
+            .event-map-section {
+                margin-bottom: 25px;
+                padding: 15px 0;
+            }
+
             .date-boxes {
                 flex-direction: column;
                 align-items: center;
@@ -652,6 +680,11 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- MAPA DEL EVENTO -->
+                <div class="event-map-section">
+                    <div id="eventMapContainer"></div>
                 </div>
 
                 <!-- PREMIOS Y COSTUMOS -->
@@ -752,9 +785,27 @@
             }
         }
 
+        // Cargar mapa del evento
+        async function loadEventMap() {
+            try {
+                const url = 'https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/Untitled-2.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L1VudGl0bGVkLTIud2VicCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3OTExNzYyODksImV4cCI6MTgyMjcxMjI4OX0.NEkVsfZmODFv_5cPCVgrVVvlYQuAkT09LtllokSAFada9_ic0655NDNzeBHpXpghJB3Ph050meHnmDzPQ';
+                
+                const container = document.getElementById('eventMapContainer');
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = 'Mapa del evento - Hacienda El Encanto';
+                container.innerHTML = '';
+                container.appendChild(img);
+                console.log('Mapa del evento cargado exitosamente');
+            } catch (error) {
+                console.error('Error al cargar mapa:', error);
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', async () => {
             await loadHeroImage();
             await loadHeroImage2();
+            await loadEventMap();
         });
     </script>
 </body>
