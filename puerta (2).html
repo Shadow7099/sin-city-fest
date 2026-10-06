@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Puerta Sin City">
+    <link rel="manifest" href="/puerta.webmanifest">
+    <title>Puerta · Sin City Fest</title>
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        @font-face {
+            font-family: 'Barbra-Regular';
+            src: url('https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/Barbra-Regular.otf?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L0JhcmJyYS1SZWd1bGFyLm90ZiIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3OTEwNDQ2OTYsImV4cCI6MTgyMjU4MDY5Nn0.jR0luJ2XcTGUXLwEe0I-nCTx4UDVcvoBAenS9bLZopnGTA0UCSFyDQ6XnDcQZsc2poGRZqwVQVD2CBebW1w99g') format('opentype');
+            font-weight: 400;
+        }
+
+        @font-face {
+            font-family: 'LexieReadable-Bold';
+            src: url('https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/LexieReadable-Bold.ttf?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L0xleGllUmVhZGFibGUtQm9sZC50dGYiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkxMDQ0NzEzLCJleHAiOjE4MjI1ODA3MTN9.ffDyupRpB1FlCCxas35agP6dI0YAvDZ-GPfE5c500mbbKJQZ-aqFZld0dueF1UOZoc60GL3uAPhGna-uxB96xQ') format('truetype');
+            font-weight: 700;
+        }
+
+        :root {
+            --color-red: #E63946;
+            --color-yellow: #F4D03F;
+            --color-black: #1A1A1A;
+            --color-cream: #E8DCC0;
+            --display: 'Barbra-Regular', serif;
+            --text: 'LexieReadable-Bold', sans-serif;
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        * { box-sizing: border-box; }
+        html, body { height: 100%; margin: 0; }
+        
+        body {
+            background: var(--color-black);
+            color: var(--color-cream);
+            font-family: var(--text);
+            -webkit-font-smoothing: antialiased;
+            -webkit-tap-highlight-color: transparent;
+            overscroll-behavior: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        button, input, select, textarea { font: inherit; color: inherit; }
+        :focus-visible { outline: 3px solid var(--color-yellow); outline-offset: 2px; }
+        .hidden { display: none !important; }
+
+        /* ========== LOGIN ========== */
+        #login {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: calc(32px + var(--safe-top)) 28px calc(32px + var(--safe-bottom));
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 420px;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            border: 3px solid var(--color-red);
+            padding: 40px;
+            text-align: center;
+            box-shadow: 6px 6px 0 var(--color-black);
+        }
+
+        .login-box h1 {
+            font-family: var(--display);
+            font-size: 2.2rem;
+            color: var(--color-yellow);
+            text-shadow: 3px 3px 0 var(--color-black);
+            margin: 0 0 8px;
+            letter-spacing: 2px;
+        }
+
+        .login-box h2 {
+            font-family: var(--display);
+            font-size: 1.4rem;
+            color: var(--color-red);
+            margin: 0 0 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .login-box p {
+            color: var(--color-cream);
+            margin: 0 0 20px;
+            line-height: 1.45;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-yellow);
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--color-yellow);
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--color-cream);
+            font-size: 1rem;
+            font-family: var(--text);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--color-cream);
+            box-shadow: 0 0 10px rgba(232, 220, 192, 0.3);
+        }
+
+        #pin {
+            font-size: 2rem;
+            letter-spacing: 0.4em;
+            text-align: center;
+            font-family: var(--display);
+        }
+
+        .btn-main {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background: var(--color-yellow);
+            color: var(--color-red);
+            border: 3px solid var(--color-black);
+            font-family: var(--display);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 4px 4px 0 var(--color-black);
+            text-decoration: none;
+        }
+
+        .btn-main:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--color-black);
+        }
+
+        .btn-main:active {
+            transform: translate(0, 0);
+            box-shadow: 2px 2px 0 var(--color-black);
+        }
+
+        .btn-main:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        .form-msg {
+            min-height: 1.4em;
+            margin-top: 12px;
+            color: #ff8a98;
+            font-weight: 600;
+        }
+
+        .form-msg.ok {
+            color: #7fe0a6;
+        }
+
+        /* ========== SCANNER ========== */
+        #scanner {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            background: #000;
+        }
+
+        .top {
+            padding: calc(10px + var(--safe-top)) 16px 10px;
+            background: linear-gradient(135deg, rgba(22, 11, 35, 0.98) 0%, rgba(26, 26, 26, 0.98) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            border-bottom: 3px solid var(--color-yellow);
+        }
+
+        .night-label {
+            font-family: var(--display);
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--color-yellow);
+            text-shadow: 2px 2px 0 var(--color-black);
+        }
+
+        .night-sub {
+            font-size: 0.8rem;
+            color: var(--color-cream);
+            margin-top: 2px;
+        }
+
+        .count {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .count b {
+            font-family: var(--display);
+            font-size: 1.8rem;
+            display: block;
+            line-height: 1;
+            color: var(--color-yellow);
+            text-shadow: 2px 2px 0 var(--color-black);
+        }
+
+        .count span {
+            font-size: 0.75rem;
+            color: var(--color-cream);
+        }
+
+        .sync-state {
+            font-size: 0.82rem;
+            line-height: 1.3;
+            color: var(--color-cream);
+        }
+
+        .sync-state b {
+            color: var(--color-yellow);
+            font-weight: bold;
+        }
+
+        .sync-state .dot {
+            display: inline-block;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            margin-right: 6px;
+            vertical-align: 1px;
+            background: #8a7aa3;
+        }
+
+        .sync-state .dot.on {
+            background: #7fe0a6;
+        }
+
+        .sync-state .dot.warn {
+            background: var(--color-yellow);
+        }
+
+        .cam {
+            position: relative;
+            flex: 1;
+            overflow: hidden;
+            background: #000;
+        }
+
+        #video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .frame {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: min(68vw, 300px);
+            aspect-ratio: 1;
+            transform: translate(-50%, -50%);
+            border-radius: 22px;
+            box-shadow: 0 0 0 100vmax rgba(10, 4, 20, 0.45);
+            pointer-events: none;
+        }
+
+        .frame::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 22px;
+            border: 3px solid var(--color-yellow);
+            -webkit-mask: linear-gradient(#000 0 0) top left/34% 34% no-repeat,
+                          linear-gradient(#000 0 0) top right/34% 34% no-repeat,
+                          linear-gradient(#000 0 0) bottom left/34% 34% no-repeat,
+                          linear-gradient(#000 0 0) bottom right/34% 34% no-repeat;
+            mask: linear-gradient(#000 0 0) top left/34% 34% no-repeat,
+                  linear-gradient(#000 0 0) top right/34% 34% no-repeat,
+                  linear-gradient(#000 0 0) bottom left/34% 34% no-repeat,
+                  linear-gradient(#000 0 0) bottom right/34% 34% no-repeat;
+        }
+
+        .bottom {
+            background: linear-gradient(135deg, rgba(22, 11, 35, 0.98) 0%, rgba(26, 26, 26, 0.98) 100%);
+            border-top: 3px solid var(--color-yellow);
+            padding: 10px 12px calc(10px + var(--safe-bottom));
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn-small {
+            padding: 12px 14px;
+            font-size: 0.92rem;
+            font-weight: bold;
+            border-radius: 8px;
+            border: 2px solid var(--color-black);
+            background: var(--color-yellow);
+            color: var(--color-red);
+            cursor: pointer;
+            font-family: var(--display);
+            text-transform: uppercase;
+            box-shadow: 2px 2px 0 var(--color-black);
+        }
+
+        .btn-small:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0 var(--color-black);
+        }
+
+        /* ========== RESULTADO ========== */
+        #verdict {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            z-index: 100;
+        }
+
+        .verdict-box {
+            text-align: center;
+            max-width: 500px;
+        }
+
+        .verdict-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .verdict-title {
+            font-family: var(--display);
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .verdict-ok .verdict-title {
+            color: #7fe0a6;
+            text-shadow: 2px 2px 0 var(--color-black);
+        }
+
+        .verdict-fail .verdict-title {
+            color: var(--color-red);
+            text-shadow: 2px 2px 0 var(--color-black);
+        }
+
+        .verdict-name {
+            font-family: var(--display);
+            font-size: 1.4rem;
+            color: var(--color-yellow);
+            margin-bottom: 8px;
+            text-shadow: 1px 1px 0 var(--color-black);
+        }
+
+        .verdict-details {
+            font-size: 1rem;
+            color: var(--color-cream);
+            margin-bottom: 12px;
+        }
+
+        .verdict-message {
+            font-size: 0.95rem;
+            color: var(--color-cream);
+            line-height: 1.4;
+            margin-bottom: 24px;
+        }
+
+        .conflict-alert {
+            background: #ff8a98;
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- LOGIN -->
+    <div id="login">
+        <div class="login-box">
+            <h1>SIN CITY</h1>
+            <h2>Puerta</h2>
+            <p>Escanea el código QR de la boleta</p>
+            
+            <div class="form-group">
+                <label for="device">Nombre de esta puerta:</label>
+                <input type="text" id="device" placeholder="Ej: Puerta 1" value="">
+            </div>
+
+            <div class="form-group">
+                <label for="pin">PIN de autenticación:</label>
+                <input type="password" id="pin" class="pin" placeholder="••••" maxlength="4">
+            </div>
+
+            <div id="pin-msg" class="form-msg"></div>
+            <button class="btn-main" onclick="doLogin()">Descargar Boletas</button>
+        </div>
+    </div>
+
+    <!-- SCANNER -->
+    <div id="scanner" class="hidden">
+        <div class="top">
+            <div>
+                <div class="night-label" id="night-label">Sin City Fest</div>
+                <div class="night-sub" id="night-sub">Halloween Edition</div>
+            </div>
+            <div class="count">
+                <b id="count-in">0</b>
+                <span id="count-sub">entradas</span>
+            </div>
+        </div>
+
+        <div class="cam">
+            <video id="video"></video>
+            <div class="frame"></div>
+        </div>
+
+        <div class="bottom">
+            <div class="sync-state" id="sync-state">
+                <span class="dot on"></span>
+                <b>Conectado</b><br>
+                Lista actualizada hace un momento
+            </div>
+            <button class="btn-small" id="search-btn" onclick="openSearch()">🔍 Buscar</button>
+            <button class="btn-small" id="sync-btn" onclick="syncData()">🔄 Sincronizar</button>
+        </div>
+    </div>
+
+    <!-- RESULTADO -->
+    <div id="verdict" class="hidden">
+        <div class="verdict-box">
+            <span class="verdict-icon" id="verdict-icon">✓</span>
+            <div class="verdict-title" id="verdict-title">Puede entrar</div>
+            <div class="verdict-name" id="verdict-name">Visitante</div>
+            <div class="verdict-details" id="verdict-details">VIP - Etapa 1</div>
+            <div class="verdict-message" id="verdict-message">Entrada registrada exitosamente</div>
+        </div>
+    </div>
+
+    <!-- MÓDULO QR VALIDATION -->
+    <script>
+        // =====================================================
+        // CONFIGURACIÓN SUPABASE
+        // =====================================================
+        const SUPABASE_URL = "https://tpdormyzwodptmtdksrs.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwZG9ybXl6d29kcHRtdGRrc3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMzU4MjYsImV4cCI6MjEwNjYxMTgyNn0.elK5v13Ufz1ogpykGnE0713OuMha6f03djTnIgYJ7iY";
+        const EVENT_ID = "sincity-fest-2026-10";
+        
+        let supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        let deviceName = "";
+        let verdictOpen = false;
+
+        function $(id) {
+            return document.getElementById(id);
+        }
+
+        // =====================================================
+        // LOGIN
+        // =====================================================
+        function doLogin() {
+            const pin = $("pin").value.replace(/\D/g, "");
+            const dev = $("device").value.trim().slice(0, 40);
+
+            $("pin-msg").textContent = "";
+
+            if (!dev) {
+                $("pin-msg").textContent = "Escribe el nombre de esta puerta (Ej: Puerta 1)";
+                $("device").focus();
+                return;
+            }
+
+            if (pin.length < 4) {
+                $("pin-msg").textContent = "PIN debe tener 4 dígitos";
+                return;
+            }
+
+            deviceName = dev;
+            $("pin-msg").textContent = "✓ Acceso concedido";
+            $("pin-msg").className = "form-msg ok";
+
+            setTimeout(() => {
+                $("login").classList.add("hidden");
+                $("scanner").classList.remove("hidden");
+                startCamera();
+            }, 500);
+        }
+
+        $("pin").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") $("device").focus();
+        });
+        $("device").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") doLogin();
+        });
+
+        // =====================================================
+        // CÁMARA
+        // =====================================================
+        async function startCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: "environment" }
+                });
+                $("video").srcObject = stream;
+                $("video").onloadedmetadata = () => {
+                    $("video").play();
+                    startScanning();
+                };
+            } catch (e) {
+                console.error("Error accediendo cámara:", e);
+            }
+        }
+
+        // =====================================================
+        // VALIDACIÓN QR
+        // =====================================================
+        async function validateQR(token) {
+            try {
+                const night = new Date().toISOString().split('T')[0];
+                
+                const { data, error } = await supabase.rpc('validate_ticket_qr', {
+                    p_token: token,
+                    p_device: deviceName,
+                    p_night: night,
+                    p_event_id: EVENT_ID
+                });
+
+                if (error) {
+                    showResult(false, "Error", "N/A", error.message, error.message);
+                    return;
+                }
+
+                if (data.is_valid) {
+                    showResult(
+                        true,
+                        "✓ PUEDE ENTRAR",
+                        data.ticket_info?.name || "Visitante",
+                        `${data.ticket_info?.access_type || "Acceso"} - Etapa ${data.ticket_info?.stage || "?"}`,
+                        data.message
+                    );
+                } else if (data.status === "DUPLICATE") {
+                    showResult(
+                        false,
+                        "✗ DOBLE ENTRADA",
+                        data.ticket_info?.name || "Desconocido",
+                        "Esta boleta ya ha entrado",
+                        data.message
+                    );
+                    playError();
+                } else if (data.status === "REVOKED") {
+                    showResult(
+                        false,
+                        "✗ BOLETA ANULADA",
+                        "N/A",
+                        "Boleta cancelada",
+                        data.message
+                    );
+                    playError();
+                } else {
+                    showResult(
+                        false,
+                        "✗ CÓDIGO INVÁLIDO",
+                        "N/A",
+                        "No reconocido",
+                        data.message
+                    );
+                    playError();
+                }
+
+                updateStats();
+
+            } catch (err) {
+                console.error("Error validando QR:", err);
+                showResult(false, "Error", "N/A", "Intenta de nuevo", err.message);
+            }
+        }
+
+        function showResult(success, title, name, details, message) {
+            const verdict = $("verdict");
+            verdict.className = success ? "verdict-ok" : "verdict-fail";
+            
+            $("verdict-icon").textContent = success ? "✓" : "✗";
+            $("verdict-title").textContent = title;
+            $("verdict-name").textContent = name;
+            $("verdict-details").textContent = details;
+            $("verdict-message").textContent = message;
+
+            verdict.classList.remove("hidden");
+            verdictOpen = true;
+
+            if (success) playSuccess();
+
+            setTimeout(() => {
+                verdict.classList.add("hidden");
+                verdictOpen = false;
+            }, 3000);
+        }
+
+        function playSuccess() {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.frequency.value = 800;
+            gain.gain.setValueAtTime(0.3, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + 0.2);
+        }
+
+        function playError() {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.frequency.value = 300;
+            gain.gain.setValueAtTime(0.3, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + 0.3);
+        }
+
+        // =====================================================
+        // ESCÁNER DE CÓDIGO
+        // =====================================================
+        let scanningActive = false;
+        let lastCode = "";
+        let lastCodeTime = 0;
+
+        async function startScanning() {
+            scanningActive = true;
+            const canvas = document.createElement('canvas');
+            const video = $("video");
+            const ctx = canvas.getContext('2d');
+            
+            const scan = () => {
+                if (!scanningActive || verdictOpen) {
+                    requestAnimationFrame(scan);
+                    return;
+                }
+
+                if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    ctx.drawImage(video, 0, 0);
+
+                    // Simulación: buscar "QR-" en la entrada de teclado
+                    // En producción, usar librería de scanning
+                }
+
+                requestAnimationFrame(scan);
+            };
+
+            scan();
+
+            // Detectar entrada de teclado (para testing)
+            document.addEventListener('keypress', (e) => {
+                if ($("scanner").classList.contains("hidden")) return;
+                
+                const key = e.key;
+                if (key === "Enter") {
+                    const input = $("qr-input");
+                    if (input?.value) {
+                        const now = Date.now();
+                        if (input.value === lastCode && (now - lastCodeTime) < 500) {
+                            return;
+                        }
+                        lastCode = input.value;
+                        lastCodeTime = now;
+
+                        validateQR(input.value);
+                        input.value = "";
+                    }
+                }
+            });
+        }
+
+        // =====================================================
+        // SINCRONIZACIÓN
+        // =====================================================
+        async function syncData() {
+            $("sync-btn").disabled = true;
+            $("sync-btn").textContent = "Sincronizando...";
+
+            try {
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                updateStats();
+                $("sync-btn").textContent = "✓ Sincronizado";
+                
+                setTimeout(() => {
+                    $("sync-btn").textContent = "🔄 Sincronizar";
+                    $("sync-btn").disabled = false;
+                }, 2000);
+            } catch (err) {
+                console.error("Error sincronizando:", err);
+                $("sync-btn").textContent = "Error";
+                $("sync-btn").disabled = false;
+            }
+        }
+
+        // =====================================================
+        // ESTADÍSTICAS
+        // =====================================================
+        async function updateStats() {
+            try {
+                const night = new Date().toISOString().split('T')[0];
+                const { data } = await supabase.rpc('get_night_stats', {
+                    p_night: night,
+                    p_event_id: EVENT_ID
+                });
+
+                if (data) {
+                    $("count-in").textContent = data.admitted || 0;
+                    $("count-sub").textContent = "entradas esta noche";
+                    
+                    if (data.conflicts_detected > 0) {
+                        const alert = document.createElement('div');
+                        alert.className = 'conflict-alert';
+                        alert.textContent = `⚠️ ${data.conflicts_detected} dobles entradas detectadas`;
+                        document.body.appendChild(alert);
+                        setTimeout(() => alert.remove(), 5000);
+                    }
+                }
+            } catch (err) {
+                console.log("No se pudieron cargar estadísticas");
+            }
+        }
+
+        // =====================================================
+        // BÚSQUEDA MANUAL
+        // =====================================================
+        function openSearch() {
+            const code = prompt("Ingresa el código QR:");
+            if (code) {
+                validateQR(code.trim());
+            }
+        }
+
+        // =====================================================
+        // INICIALIZACIÓN
+        // =====================================================
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("/puerta-sw.js", { scope: "/puerta" }).catch(() => {});
+        }
+
+        if (navigator.storage && navigator.storage.persist) {
+            navigator.storage.persist().catch(() => {});
+        }
+
+        $("night-label").textContent = "SIN CITY";
+        $("night-sub").textContent = "Halloween Edition · 30 OCT";
+        updateStats();
+
+        // DEBUG
+        window.__qrDebug = {
+            validateQR: validateQR,
+            updateStats: updateStats,
+            supabase: supabase
+        };
+
+        console.log("✅ Puerta Sin City Fest - Modo escáner");
+        console.log("Para testing: window.__qrDebug.validateQR('QR-2026-10-001')");
+    </script>
+</body>
+</html>
