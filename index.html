@@ -3,11 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sin City Fest - Halloween Edition 2026</title>
-    
-    <!-- Supabase Script -->
-    <script async src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
+    <title>Sin City Fest - Halloween Edition 2026 | 30 de octubre · Hacienda El Encanto</title>
+    <meta name="description" content="Fiesta de disfraces con 7 millones en premios, DJs locales y atracciones. 30 de octubre, Hacienda El Encanto (Km 5.5 vía Suba-Cota). Boletas desde $25.000.">
+    <meta name="theme-color" content="#E63946">
+
+    <!-- Al compartir el enlace por WhatsApp / Instagram / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_CO">
+    <meta property="og:site_name" content="Sin City Fest">
+    <meta property="og:title" content="Sin City Fest - Halloween Edition · 30 de octubre">
+    <meta property="og:description" content="7 millones en premios a los mejores disfraces. DJs locales + atracciones. Boletas desde $25.000.">
+    <meta property="og:url" content="https://sincityfest.com/">
+    <meta property="og:image" content="https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/PERSONAJES%201.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L1BFUlNPTkFKRVMgMS53ZWJwIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc5MTA2ODI5MywiZXhwIjoxODIyNjA0MjkzfQ.BVkZR8XlKvEyorewbKul6LA5FC1Ljl4vZ3pmafgPRO1x0AzLFPF1JD_P14ZSm1Hm_kWedJuzN9N9nScYF97Y0g">
+    <meta name="twitter:card" content="summary_large_image">
+
     <style>
         * {
             margin: 0;
@@ -28,14 +37,11 @@
             font-family: 'Barbra-Regular';
             src: url('https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/Barbra-Regular.otf?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L0JhcmJyYS1SZWd1bGFyLm90ZiIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3OTEwNDQ2OTYsImV4cCI6MTgyMjU4MDY5Nn0.jR0luJ2XcTGUXLwEe0I-nCTx4UDVcvoBAenS9bLZopnGTA0UCSFyDQ6XnDcQZsc2poGRZqwVQVD2CBebW1w99g') format('opentype');
             font-weight: 400;
-            font-style: normal;
         }
-
         @font-face {
             font-family: 'LexieReadable-Bold';
             src: url('https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/LexieReadable-Bold.ttf?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L0xleGllUmVhZGFibGUtQm9sZC50dGYiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkxMDQ0NzEzLCJleHAiOjE4MjI1ODA3MTN9.ffDyupRpB1FlCCxas35agP6dI0YAvDZ-GPfE5c500mbbKJQZ-aqFZld0dueF1UOZoc60GL3uAPhGna-uxB96xQ') format('truetype');
             font-weight: 700;
-            font-style: normal;
         }
 
         /* EFECTO GRANULADO */
@@ -632,23 +638,199 @@
                 padding: 12px 30px;
             }
         }
+
+        /* =====================================================
+           AÑADIDOS PARA CONVERSIÓN (misma paleta y tipografías)
+           ===================================================== */
+        a.buy-button { text-decoration: none; }
+
+        .buy-button.block {
+            display: block;
+            width: 100%;
+            margin: 20px 0 0;
+            text-align: center;
+            font-size: 1.25rem;
+            padding: 12px 10px;
+        }
+
+        /* Botón principal arriba, junto a fecha y lugar */
+        .cta-block {
+            text-align: center;
+            margin: 0 0 24px;
+        }
+
+        .cta-block .buy-button {
+            margin: 0;
+            font-size: 1.9rem;
+            padding: 16px 48px;
+        }
+
+        .cta-sub {
+            margin-top: 12px;
+            font-size: 0.95rem;
+            color: var(--color-yellow);
+            text-shadow: 2px 2px 0 var(--color-black);
+            letter-spacing: 1px;
+        }
+
+        .trust-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px 18px;
+            margin-top: 12px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--color-cream);
+        }
+
+        .trust-row span::before {
+            content: '✔ ';
+            color: var(--color-yellow);
+        }
+
+        /* Cuenta regresiva */
+        .countdown-wrap {
+            text-align: center;
+            margin: 6px 0 26px;
+        }
+
+        .countdown-label {
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--color-cream);
+            text-shadow: 2px 2px 0 var(--color-black);
+            margin-bottom: 8px;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .cd-box {
+            background: var(--color-black);
+            border: 3px solid white;
+            min-width: 74px;
+            padding: 8px 6px 6px;
+            text-align: center;
+        }
+
+        .cd-num {
+            font-family: 'Barbra-Regular', serif;
+            font-size: 2rem;
+            line-height: 1.1;
+            color: var(--color-yellow);
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.6);
+        }
+
+        .cd-lbl {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--color-cream);
+        }
+
+        /* Etapas de precio: vigente / cerradas */
+        .price-item.stage-active {
+            background: rgba(244, 208, 63, 0.16);
+            border: 2px solid var(--color-yellow);
+            padding: 8px 10px;
+        }
+
+        .price-item.stage-closed {
+            opacity: 0.45;
+        }
+
+        .price-item.stage-closed .price-amount {
+            text-decoration: line-through;
+        }
+
+        .stage-badge {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 2px 8px;
+            background: var(--color-yellow);
+            color: var(--color-red);
+            font-size: 0.65rem;
+            letter-spacing: 1px;
+            border: 2px solid var(--color-black);
+            vertical-align: middle;
+        }
+
+        .stage-badge.closed {
+            background: transparent;
+            color: var(--color-cream);
+            border-color: var(--color-cream);
+        }
+
+        .stage-note {
+            text-align: center;
+            margin: -10px 0 30px;
+            font-size: 0.95rem;
+            color: var(--color-yellow);
+            text-shadow: 2px 2px 0 var(--color-black);
+            letter-spacing: 1px;
+            min-height: 1.2em;
+        }
+
+        /* Barra fija en el celular */
+        .sticky-cta {
+            display: none;
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 50;
+            background: var(--color-black);
+            border-top: 3px solid var(--color-yellow);
+            padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+            transform: translateY(115%);
+            transition: transform 0.25s ease;
+        }
+
+        .sticky-cta.show {
+            transform: translateY(0);
+        }
+
+        .sticky-cta .buy-button {
+            display: block;
+            width: 100%;
+            margin: 0;
+            padding: 12px 10px;
+            font-size: 1.15rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            html, body { padding-bottom: 110px; }
+            .sticky-cta { display: block; }
+            #heroImageContainer, #heroImageContainer2 { height: 420px; }
+            .cta-block .buy-button { font-size: 1.4rem; padding: 14px 20px; width: 100%; }
+            .cd-box { min-width: 64px; }
+            .cd-num { font-size: 1.6rem; }
+            .date-boxes { flex-direction: row; justify-content: center; gap: 12px; }
+            .date-box { min-width: 0; flex: 1; padding: 10px 8px; }
+            .date-box-value { font-size: 1.5rem; }
+        }
     </style>
 </head>
 <body>
     <div class="poster-frame">
         <div class="poster-inner">
             <div class="poster-content">
+
                 <!-- TÍTULO -->
                 <div class="title-section">
-                    <div class="main-title">
+                    <h1 class="main-title">
                         <span class="title-part-1">SIN CITY</span>
                         <span class="title-part-2">FEST</span>
-                    </div>
+                    </h1>
                     <div class="subtitle">Halloween Edition</div>
                 </div>
-
-                <!-- IMAGEN HERO -->
-                <div id="heroImageContainer"></div>
 
                 <!-- FECHA Y HORA -->
                 <div class="date-boxes">
@@ -662,6 +844,31 @@
                     </div>
                 </div>
 
+                <!-- BOTÓN PRINCIPAL (arriba, donde la gente decide) -->
+                <div class="cta-block" id="topCta">
+                    <a class="buy-button" href="checkout.html" data-cta="hero">Comprar Boletas</a>
+                    <div class="cta-sub" id="ctaSub">Boletas desde $25.000</div>
+                    <div class="trust-row">
+                        <span>Pago seguro con Bold</span>
+                        <span>Tarjetas, PSE y más</span>
+                        <span>Tu QR llega al pagar</span>
+                    </div>
+                </div>
+
+                <!-- CUENTA REGRESIVA -->
+                <div class="countdown-wrap" id="countdownWrap">
+                    <div class="countdown-label">Faltan para abrir puertas</div>
+                    <div class="countdown">
+                        <div class="cd-box"><div class="cd-num" id="cdD">--</div><div class="cd-lbl">días</div></div>
+                        <div class="cd-box"><div class="cd-num" id="cdH">--</div><div class="cd-lbl">horas</div></div>
+                        <div class="cd-box"><div class="cd-num" id="cdM">--</div><div class="cd-lbl">min</div></div>
+                        <div class="cd-box"><div class="cd-num" id="cdS">--</div><div class="cd-lbl">seg</div></div>
+                    </div>
+                </div>
+
+                <!-- IMAGEN HERO -->
+                <div id="heroImageContainer"><img src="https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/PERSONAJES%201.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L1BFUlNPTkFKRVMgMS53ZWJwIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc5MTA2ODI5MywiZXhwIjoxODIyNjA0MjkzfQ.BVkZR8XlKvEyorewbKul6LA5FC1Ljl4vZ3pmafgPRO1x0AzLFPF1JD_P14ZSm1Hm_kWedJuzN9N9nScYF97Y0g" alt="Personajes Sin City Fest" fetchpriority="high" decoding="async"></div>
+
                 <!-- UBICACIÓN Y ENTRETENIMIENTO -->
                 <div class="location-entertainment">
                     <div class="location-title">HACIENDA EL ENCANTO</div>
@@ -672,57 +879,9 @@
                 </div>
 
                 <!-- IMAGEN PERSONAJES 2 -->
-                <div id="heroImageContainer2"></div>
+                <div id="heroImageContainer2"><img src="https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/image_2026-10-03_174844997.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L2ltYWdlXzIwMjYtMTAtMDNfMTc0ODQ0OTk3LndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkxMDY4MzA1LCJleHAiOjE4MjI2MDQzMDV9.EqqOcnV5IhwD7mn8aMA-kRr3wLfZEKq8t4NepLdukfcye6ndiD6Ic8rSRi6f4AgPze2u2gWEtjUGmRrOOKEBew" alt="Personajes Sin City Fest 2" loading="lazy" decoding="async"></div>
 
-                <!-- PRECIOS -->
-                <div class="pricing-grid">
-                    <div class="pricing-column">
-                        <div class="access-title">General Access:</div>
-                        <div class="price-list">
-                            <div class="price-item">
-                                <span class="price-label">Etapa 1:</span>
-                                <span class="price-amount">$25K</span>
-                            </div>
-                            <div class="price-item">
-                                <span class="price-label">Etapa 2:</span>
-                                <span class="price-amount">$30K</span>
-                            </div>
-                            <div class="price-item">
-                                <span class="price-label">Etapa 3:</span>
-                                <span class="price-amount">$35K</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="pricing-column">
-                        <div class="access-title">VIP Access:</div>
-                        <div class="price-list">
-                            <div class="price-item">
-                                <span class="price-label">Etapa 1:</span>
-                                <span class="price-amount">$35K</span>
-                            </div>
-                            <div class="price-item">
-                                <span class="price-label">Etapa 2:</span>
-                                <span class="price-amount">$40K</span>
-                            </div>
-                            <div class="price-item">
-                                <span class="price-label">Etapa 3:</span>
-                                <span class="price-amount">$45K</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- MAPA DEL EVENTO -->
-                <div class="event-map-section">
-                    <div class="map-header">
-                        <div class="map-location-title">HACIENDA EL ENCANTO</div>
-                        <div class="map-location-address">KM 5.5 VÍA SUBA-COTA</div>
-                    </div>
-                    <div id="eventMapContainer"></div>
-                </div>
-
-                <!-- PREMIOS Y COSTUMOS -->
+                <!-- PREMIOS Y COSTUMOS (el gancho, antes de mostrar el precio) -->
                 <div class="awards-section">
                     <div class="awards-title">7 MILLONES</div>
                     <div class="awards-subtitle">EN PREMIOS A LOS MEJORES DISFRACES</div>
@@ -766,9 +925,64 @@
                     </div>
                 </div>
 
-                <!-- BOTONES COMPRA -->
-                <div class="buy-section">
-                    <button class="buy-button" onclick="window.location.href='checkout.html'">Comprar Boletas</button>
+                <!-- PRECIOS (con botón de compra en cada columna) -->
+                <div class="pricing-grid" id="pricing">
+                    <div class="pricing-column">
+                        <div class="access-title">General Access:</div>
+                        <div class="price-list">
+                            <div class="price-item" data-stage="1">
+                                <span class="price-label">Etapa 1:</span>
+                                <span class="price-amount">$25.000</span>
+                            </div>
+                            <div class="price-item" data-stage="2">
+                                <span class="price-label">Etapa 2:</span>
+                                <span class="price-amount">$30.000</span>
+                            </div>
+                            <div class="price-item" data-stage="3">
+                                <span class="price-label">Etapa 3:</span>
+                                <span class="price-amount">$35.000</span>
+                            </div>
+                        </div>
+                        <a class="buy-button block" href="checkout.html?tipo=general" data-cta="general">Comprar General</a>
+                    </div>
+
+                    <div class="pricing-column">
+                        <div class="access-title">VIP Access:</div>
+                        <div class="price-list">
+                            <div class="price-item" data-stage="1">
+                                <span class="price-label">Etapa 1:</span>
+                                <span class="price-amount">$35.000</span>
+                            </div>
+                            <div class="price-item" data-stage="2">
+                                <span class="price-label">Etapa 2:</span>
+                                <span class="price-amount">$40.000</span>
+                            </div>
+                            <div class="price-item" data-stage="3">
+                                <span class="price-label">Etapa 3:</span>
+                                <span class="price-amount">$45.000</span>
+                            </div>
+                        </div>
+                        <a class="buy-button block" href="checkout.html?tipo=vip" data-cta="vip">Comprar VIP</a>
+                    </div>
+                </div>
+                <div class="stage-note" id="stageNote"></div>
+
+                <!-- MAPA DEL EVENTO -->
+                <div class="event-map-section">
+                    <div class="map-header">
+                        <div class="map-location-title">HACIENDA EL ENCANTO</div>
+                        <div class="map-location-address">KM 5.5 VÍA SUBA-COTA</div>
+                    </div>
+                    <div id="eventMapContainer"><img src="https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/Untitled-2.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L1VudGl0bGVkLTIud2VicCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3OTExNzY1MDAsImV4cCI6MTgyMjcxMjUwMH0.PxPime5WxGeyxNzKAs_ahTNFQKfxr2S6nqDEzIVl-9FzWDjfINqw1k-F3cCAqBgoyIPQpcPycN0HWfo6K8vjqQ" alt="Mapa del evento - Hacienda El Encanto" loading="lazy" decoding="async"></div>
+                </div>
+
+                <!-- BOTÓN FINAL -->
+                <div class="buy-section" id="finalCta">
+                    <a class="buy-button" href="checkout.html" data-cta="final">Comprar Boletas</a>
+                    <div class="trust-row" style="margin-top:16px">
+                        <span>Pago seguro con Bold</span>
+                        <span>Tu QR llega al pagar</span>
+                    </div>
                 </div>
 
                 <!-- FOOTER -->
@@ -784,64 +998,79 @@
         <div class="poster-bottom-bones"></div>
     </div>
 
-    <!-- SCRIPTS -->
+    <!-- Barra fija de compra (solo celular) -->
+    <div class="sticky-cta" id="stickyCta" aria-hidden="true">
+        <a class="buy-button" href="checkout.html" data-cta="sticky" id="stickyLabel">Comprar boletas · desde $25.000</a>
+    </div>
+
     <script>
-        // Cargar imagen de personajes directamente con URL
-        async function loadHeroImage() {
-            try {
-                const url = 'https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/PERSONAJES%201.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L1BFUlNPTkFKRVMgMS53ZWJwIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc5MTA2ODI5MywiZXhwIjoxODIyNjA0MjkzfQ.BVkZR8XlKvEyorewbKul6LA5FC1Ljl4vZ3pmafgPRO1x0AzLFPF1JD_P14ZSm1Hm_kWedJuzN9N9nScYF97Y0g';
-                
-                const container = document.getElementById('heroImageContainer');
-                const img = document.createElement('img');
-                img.src = url;
-                img.alt = 'Personajes Sin City Fest';
-                container.innerHTML = '';
-                container.appendChild(img);
-                console.log('Personajes 1 cargados exitosamente');
-            } catch (error) {
-                console.error('Error al cargar imagen:', error);
+        var SUPABASE_URL = "https://tpdormyzwodptmtdksrs.supabase.co";
+        var ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwZG9ybXl6d29kcHRtdGRrc3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMzU4MjYsImV4cCI6MjEwNjYxMTgyNn0.elK5v13Ufz1ogpykGnE0713OuMha6f03djTnIgYJ7iY";
+        var PRECIOS = { general: { 1: 25000, 2: 30000, 3: 35000 }, vip: { 1: 35000, 2: 40000, 3: 45000 } };
+        var EVENTO = new Date('2026-10-30T19:00:00-05:00').getTime(); // apertura de puertas, hora de Bogotá
+
+        function $(id) { return document.getElementById(id); }
+        function fmt(n) { return '$' + Number(n).toLocaleString('es-CO'); }
+
+        // ===== Etapa vigente (la define el servidor; se marca en los precios) =====
+        function aplicarEtapa(n) {
+            if (!(n >= 1 && n <= 3)) return;
+            var filas = document.querySelectorAll('.price-item[data-stage]');
+            for (var i = 0; i < filas.length; i++) {
+                var f = filas[i], s = parseInt(f.getAttribute('data-stage'), 10);
+                f.classList.toggle('stage-active', s === n);
+                f.classList.toggle('stage-closed', s < n);
+                var label = f.querySelector('.price-label');
+                var old = label.querySelector('.stage-badge'); if (old) old.remove();
+                if (s === n || s < n) {
+                    var b = document.createElement('span');
+                    b.className = 'stage-badge' + (s < n ? ' closed' : '');
+                    b.textContent = s === n ? 'VIGENTE' : 'CERRADA';
+                    label.appendChild(b);
+                }
             }
+            var desde = fmt(PRECIOS.general[n]);
+            $('ctaSub').textContent = 'Boletas desde ' + desde;
+            $('stickyLabel').textContent = 'Comprar boletas · desde ' + desde;
+            $('stageNote').textContent = n < 3
+                ? 'Etapa ' + n + ' vigente. En la Etapa ' + (n + 1) + ' el precio sube a ' + fmt(PRECIOS.general[n + 1]) + ' (General) y ' + fmt(PRECIOS.vip[n + 1]) + ' (VIP).'
+                : 'Última etapa de venta vigente.';
         }
 
-        // Cargar segunda imagen de personajes
-        async function loadHeroImage2() {
-            try {
-                const url = 'https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/image_2026-10-03_174844997.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L2ltYWdlXzIwMjYtMTAtMDNfMTc0ODQ0OTk3LndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkxMDY4MzA1LCJleHAiOjE4MjI2MDQzMDV9.EqqOcnV5IhwD7mn8aMA-kRr3wLfZEKq8t4NepLdukfcye6ndiD6Ic8rSRi6f4AgPze2u2gWEtjUGmRrOOKEBew';
-                
-                const container = document.getElementById('heroImageContainer2');
-                const img = document.createElement('img');
-                img.src = url;
-                img.alt = 'Personajes Sin City Fest 2';
-                container.innerHTML = '';
-                container.appendChild(img);
-                console.log('Personajes 2 cargados exitosamente');
-            } catch (error) {
-                console.error('Error al cargar imagen 2:', error);
-            }
-        }
+        fetch(SUPABASE_URL + '/rest/v1/sale_stage?select=current_stage&limit=1', {
+            headers: { apikey: ANON_KEY, Authorization: 'Bearer ' + ANON_KEY }
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (rows) {
+            if (rows && rows[0] && rows[0].current_stage) aplicarEtapa(parseInt(String(rows[0].current_stage).replace(/\D/g, ''), 10));
+        })
+        .catch(function () { /* si falla, la página queda con los precios estáticos */ });
 
-        // Cargar mapa del evento
-        async function loadEventMap() {
-            try {
-                const url = 'https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/Untitled-2.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L1VudGl0bGVkLTIud2VicCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3OTExNzY1MDAsImV4cCI6MTgyMjcxMjUwMH0.PxPime5WxGeyxNzKAs_ahTNFQKfxr2S6nqDEzIVl-9FzWDjfINqw1k-F3cCAqBgoyIPQpcPycN0HWfo6K8vjqQ';
-                
-                const container = document.getElementById('eventMapContainer');
-                const img = document.createElement('img');
-                img.src = url;
-                img.alt = 'Mapa del evento - Hacienda El Encanto';
-                container.innerHTML = '';
-                container.appendChild(img);
-                console.log('Mapa del evento cargado exitosamente');
-            } catch (error) {
-                console.error('Error al cargar mapa:', error);
-            }
+        // ===== Cuenta regresiva =====
+        function tickCountdown() {
+            var diff = EVENTO - Date.now();
+            if (diff <= 0) { $('countdownWrap').style.display = 'none'; return false; }
+            var d = Math.floor(diff / 86400000), h = Math.floor(diff % 86400000 / 3600000),
+                m = Math.floor(diff % 3600000 / 60000), s = Math.floor(diff % 60000 / 1000);
+            $('cdD').textContent = d;
+            $('cdH').textContent = ('0' + h).slice(-2);
+            $('cdM').textContent = ('0' + m).slice(-2);
+            $('cdS').textContent = ('0' + s).slice(-2);
+            return true;
         }
+        if (tickCountdown()) { var cdTimer = setInterval(function () { if (!tickCountdown()) clearInterval(cdTimer); }, 1000); }
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            await loadHeroImage();
-            await loadHeroImage2();
-            await loadEventMap();
-        });
+        // ===== Barra fija: aparece al pasar el botón de arriba y se oculta cerca de los otros botones =====
+        (function () {
+            var bar = $('stickyCta');
+            if (!('IntersectionObserver' in window)) { bar.classList.add('show'); return; }
+            var visible = { top: true, pricing: false, final: false };
+            function update() { bar.classList.toggle('show', !visible.top && !visible.pricing && !visible.final); }
+            function watch(id, key) {
+                new IntersectionObserver(function (es) { visible[key] = es[0].isIntersecting; update(); }, { threshold: 0.05 }).observe($(id));
+            }
+            watch('topCta', 'top'); watch('pricing', 'pricing'); watch('finalCta', 'final');
+        })();
     </script>
 </body>
 </html>
