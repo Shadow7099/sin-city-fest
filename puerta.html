@@ -173,10 +173,12 @@
 
     // ===== Validar un código leído (cámara o manual) =====
     function procesarCodigo(raw) {
-        var qr = String(raw || "").trim();
-        if (!qr || st.busy) return Promise.resolve();
+        var texto = String(raw || "").trim();
+        if (!texto || st.busy) return Promise.resolve();
+        var m = texto.match(/SCF1\.[A-Za-z0-9_-]+\.[GV]\.[A-Za-z0-9_-]+/);
+        var qr = m ? m[0] : texto;
         var p = parseQR(qr);
-        if (!p) { show("bad", "QR NO VÁLIDO", "No es una boleta de Sin City Fest"); return Promise.resolve(); }
+        if (!p) { show("bad", "QR NO VÁLIDO", "No es una boleta de Sin City Fest. Leí: " + (texto.length > 38 ? texto.slice(0, 38) + "…" : texto)); return Promise.resolve(); }
         if (!st.verifyKey) { show("bad", "SINCRONIZA", "Falta descargar la llave. Toca Sincronizar con señal."); return Promise.resolve(); }
         st.busy = true;
         return verifySig(p).then(function (ok) {
@@ -251,8 +253,14 @@
         }
         navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" }, width: { ideal: 1280 } }, audio: false }).then(function (s) {
             stream = s; var v = $("video"); v.srcObject = s; v.play();
-            if ("BarcodeDetector" in window) { try { detector = new BarcodeDetector({ formats: ["qr_code"] }); } catch (e) { detector = null; } }
-            if (!detector && !window.jsQR) { $("nocam").style.display = "flex"; $("nocam").textContent = "Este navegador no puede leer QR. Usa el código manual."; hint("Lector de QR no disponible"); return; }
+            if ("BarcodeDetector" in window) {
+                try {
+                    var bd = new BarcodeDetector({ formats: ["qr_code"] });
+                    var sup = BarcodeDetector.getSupportedFormats ? BarcodeDetector.getSupportedFormats() : Promise.resolve(["qr_code"]);
+                    sup.then(function (f) { if (f.indexOf("qr_code") >= 0) detector = bd; }).catch(function () {});
+                } catch (e) { detector = null; }
+            }
+            if (!("BarcodeDetector" in window) && !window.jsQR) { $("nocam").style.display = "flex"; $("nocam").textContent = "Este navegador no puede leer QR. Usa el código manual."; hint("Lector de QR no disponible"); return; }
             hint("Cámara lista · apunta al QR");
             loopOn = true; requestAnimationFrame(tick);
         }).catch(function (e) {
@@ -263,27 +271,37 @@
         });
     }
     function stopCam() { loopOn = false; if (stream) stream.getTracks().forEach(function (t) { t.stop(); }); stream = null; }
-    var lastTick = 0;
+    var lastTick = 0, frames = 0, nativeBusy = false, lastHint = -1e9;
     function onCode(code) {
         var now = Date.now();
         if (code === st.last.code && now - st.last.at < 3500) return;
         st.last = { code: code, at: now };
         procesarCodigo(code);
     }
+    function scanJs(v) {
+        if (!window.jsQR) return;
+        var w = v.videoWidth, h = v.videoHeight; if (!w) return;
+        var s = Math.min(1, 960 / w); canvas.width = Math.round(w * s); canvas.height = Math.round(h * s);
+        ctx.drawImage(v, 0, 0, canvas.width, canvas.height);
+        var img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        var r = window.jsQR(img.data, img.width, img.height, { inversionAttempts: "dontInvert" });
+        if (r && r.data) onCode(r.data);
+    }
     function tick(ts) {
         if (!loopOn) return;
         requestAnimationFrame(tick);
         if (ts - lastTick < 130) return; lastTick = ts;
         var v = $("video"); if (v.readyState < 2 || st.busy) return;
+        frames++;
+        if (ts - lastHint > 1000) { lastHint = ts; hint("Cámara activa · leyendo (" + (detector ? "lector nativo" : "lector incluido") + ") · " + frames); }
         if (detector) {
-            detector.detect(v).then(function (r) { if (r && r[0]) onCode(r[0].rawValue); }).catch(function () {});
-        } else if (window.jsQR) {
-            var w = v.videoWidth, h = v.videoHeight; if (!w) return;
-            var s = Math.min(1, 960 / w); canvas.width = Math.round(w * s); canvas.height = Math.round(h * s);
-            ctx.drawImage(v, 0, 0, canvas.width, canvas.height);
-            var img = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            var r = window.jsQR(img.data, img.width, img.height, { inversionAttempts: "dontInvert" });
-            if (r && r.data) onCode(r.data);
+            if (nativeBusy) return; nativeBusy = true;
+            detector.detect(v).then(function (r) {
+                nativeBusy = false;
+                if (r && r[0] && r[0].rawValue) onCode(r[0].rawValue); else scanJs(v);   // si el nativo no ve nada, prueba el incluido
+            }).catch(function () { nativeBusy = false; detector = null; });                 // si el nativo falla, se usa solo el incluido
+        } else {
+            scanJs(v);
         }
     }
 
