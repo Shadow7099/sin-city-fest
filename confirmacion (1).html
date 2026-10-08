@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Confirmación · Sin City Fest</title>
+    <style>
+        @font-face {
+            font-family: 'Barbra-Regular';
+            src: url('https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/Barbra-Regular.otf?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L0JhcmJyYS1SZWd1bGFyLm90ZiIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3OTEwNDQ2OTYsImV4cCI6MTgyMjU4MDY5Nn0.jR0luJ2XcTGUXLwEe0I-nCTx4UDVcvoBAenS9bLZopnGTA0UCSFyDQ6XnDcQZsc2poGRZqwVQVD2CBebW1w99g') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'LexieReadable-Bold';
+            src: url('https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/LexieReadable-Bold.ttf?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L0xleGllUmVhZGFibGUtQm9sZC50dGYiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkxMDQ0NzEzLCJleHAiOjE4MjI1ODA3MTN9.ffDyupRpB1FlCCxas35agP6dI0YAvDZ-GPfE5c500mbbKJQZ-aqFZld0dueF1UOZoc60GL3uAPhGna-uxB96xQ') format('truetype');
+        }
+
+        :root {
+            --color-red: #E63946;
+            --color-yellow: #F4D03F;
+            --color-black: #1A1A1A;
+            --color-cream: #E8DCC0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            color: var(--color-cream);
+            font-family: 'LexieReadable-Bold', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .title {
+            font-family: 'Barbra-Regular', serif;
+            font-size: 2.2rem;
+            color: var(--color-yellow);
+            text-shadow: 3px 3px 0 var(--color-black);
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: var(--color-cream);
+            opacity: 0.8;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            border: 3px solid var(--color-red);
+            padding: 40px;
+            box-shadow: 6px 6px 0 var(--color-black);
+            margin-bottom: 30px;
+        }
+
+        .confirmation-content {
+            text-align: center;
+        }
+
+        .icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .status-title {
+            font-family: 'Barbra-Regular', serif;
+            font-size: 1.8rem;
+            color: #7fe0a6;
+            text-shadow: 2px 2px 0 var(--color-black);
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+        }
+
+        .status-message {
+            font-size: 1.1rem;
+            color: var(--color-cream);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .details {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--color-yellow);
+            padding: 16px;
+            margin: 24px 0;
+            text-align: left;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .detail-label {
+            color: var(--color-yellow);
+            font-weight: bold;
+        }
+
+        .detail-value {
+            color: var(--color-cream);
+        }
+
+        .qr-section {
+            margin: 24px 0;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px dashed var(--color-yellow);
+        }
+
+        .qr-label {
+            font-size: 0.85rem;
+            color: var(--color-yellow);
+            font-weight: bold;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            background: white;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            border: 2px solid var(--color-yellow);
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn {
+            padding: 14px 20px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border: 3px solid var(--color-black);
+            font-family: 'Barbra-Regular', serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 4px 4px 0 var(--color-black);
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--color-black);
+        }
+
+        .btn:active {
+            transform: translate(0, 0);
+            box-shadow: 2px 2px 0 var(--color-black);
+        }
+
+        .btn-primary {
+            background: var(--color-yellow);
+            color: var(--color-red);
+        }
+
+        .btn-secondary {
+            background: var(--color-cream);
+            color: var(--color-black);
+        }
+
+        .btn-full {
+            grid-column: 1 / -1;
+        }
+
+        .warning-box {
+            background: rgba(230, 57, 70, 0.1);
+            border: 2px solid var(--color-red);
+            padding: 16px;
+            margin: 20px 0;
+            text-align: center;
+            border-radius: 6px;
+        }
+
+        .warning-text {
+            color: #ff8a98;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--color-cream);
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        .footer-link {
+            color: var(--color-yellow);
+            text-decoration: none;
+            border-bottom: 1px solid var(--color-yellow);
+        }
+
+        .footer-link:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 600px) {
+            .title {
+                font-size: 1.8rem;
+            }
+
+            .card {
+                padding: 24px;
+            }
+
+            .buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .icon {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">SIN CITY</h1>
+            <p class="subtitle">Halloween Edition - Confirmación de Entrada</p>
+        </div>
+
+        <div class="card">
+            <div class="confirmation-content">
+                <span class="icon">✓</span>
+                <h2 class="status-title">¡ENTRADA CONFIRMADA!</h2>
+                <p class="status-message">Tu código QR ha sido validado exitosamente. ¡Bienvenido a Sin City Fest!</p>
+
+                <div class="details">
+                    <div class="detail-item">
+                        <span class="detail-label">Nombre:</span>
+                        <span class="detail-value" id="nombre">Juan García</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Acceso:</span>
+                        <span class="detail-value" id="acceso">General</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Etapa:</span>
+                        <span class="detail-value" id="etapa">1</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Hora de Entrada:</span>
+                        <span class="detail-value" id="hora">7:45 PM</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Puerta:</span>
+                        <span class="detail-value" id="puerta">Entrada Principal</span>
+                    </div>
+                </div>
+
+                <div class="qr-section">
+                    <div class="qr-label">Código QR Escaneado:</div>
+                    <div class="qr-placeholder" id="qr-display">
+                        📱 QR
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <p class="warning-text">🎃 Conserva tu comprobante para consultas posteriores</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button class="btn btn-primary" onclick="downloadConfirmation()">Descargar</button>
+            <button class="btn btn-secondary" onclick="shareConfirmation()">Compartir</button>
+            <button class="btn btn-primary btn-full" onclick="goHome()">Volver al Inicio</button>
+        </div>
+
+        <div class="footer">
+            <p>Sin City Fest Halloween Edition 2026</p>
+            <p>Viernes 30 de Octubre - 7:00 PM</p>
+            <p><a href="/terminos.html" class="footer-link">Términos y condiciones</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Obtener parámetros de la URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param) || 'N/A';
+        }
+
+        // Llenar datos
+        document.getElementById('nombre').textContent = getQueryParam('nombre') || 'Visitante';
+        document.getElementById('acceso').textContent = getQueryParam('acceso') || 'General';
+        document.getElementById('etapa').textContent = getQueryParam('etapa') || '1';
+        document.getElementById('hora').textContent = new Date().toLocaleTimeString('es-CO');
+        document.getElementById('puerta').textContent = getQueryParam('puerta') || 'Entrada Principal';
+
+        // Mostrar QR si existe
+        const qrCode = getQueryParam('qr');
+        if (qrCode) {
+            document.getElementById('qr-display').textContent = qrCode;
+        }
+
+        function downloadConfirmation() {
+            const content = `
+Sin City Fest - Confirmación de Entrada
+=====================================
+
+Nombre: ${document.getElementById('nombre').textContent}
+Acceso: ${document.getElementById('acceso').textContent}
+Etapa: ${document.getElementById('etapa').textContent}
+Hora de Entrada: ${document.getElementById('hora').textContent}
+Puerta: ${document.getElementById('puerta').textContent}
+
+Código QR: ${qrCode || 'N/A'}
+
+Conserva este comprobante para consultas posteriores.
+            `;
+            
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'confirmacion-sincity.txt';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        }
+
+        function shareConfirmation() {
+            const text = `¡Ya confirmé mi entrada a Sin City Fest! ${document.getElementById('nombre').textContent} - Acceso ${document.getElementById('acceso').textContent}`;
+            const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+            window.open(url, '_blank');
+        }
+
+        function goHome() {
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>
