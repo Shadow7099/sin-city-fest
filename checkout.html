@@ -6,7 +6,7 @@
     <title>Comprar Boletas - Sin City Fest 2026</title>
     
     <!-- Bold Checkout Script -->
-    <script src="https://checkout.bold.com/bold-checkout.js"></script>
+    <script src="https://checkout.bold.co/library/boldPaymentButton.js"></script>
     
     <style>
         * {
@@ -408,52 +408,94 @@
             document.getElementById('total-price').textContent = '$' + total.toLocaleString();
         }
 
+        const FUNCTIONS_BASE = "https://tpdormyzwodptmtdksrs.supabase.co/functions/v1";
+
         function procesarPago() {
             const tipo = document.getElementById('ticket-type').value;
             const etapa = document.getElementById('ticket-stage').value;
-            const cantidad = document.getElementById('quantity').value;
+            const cantidad = parseInt(document.getElementById('quantity').value);
             const nombre = document.getElementById('nombre').value;
             const email = document.getElementById('email').value;
             const telefono = document.getElementById('telefono').value;
-            const documento = document.getElementById('documento').value;
 
             // Validar campos
-            if (!tipo || !etapa || !nombre || !email || !telefono || !documento) {
+            if (!tipo || !etapa || !nombre || !email || !telefono || !cantidad) {
                 alert('Por favor completa todos los campos');
                 return;
             }
 
             const total = (precios[tipo][etapa] * cantidad);
 
-            // Aquí se integra con Bold
-            // Necesitas tu PUBLIC_KEY de Bold para inicializar el checkout
-            // Para implementar, necesitas:
-            // 1. Tu PUBLIC_KEY de Bold
-            // 2. Crear una orden en tu backend que retorne el TOKEN de Bold
+            // Deshabilitar botón mientras se procesa
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = 'Procesando...';
 
-            console.log('Datos de la orden:', {
-                tipo,
-                etapa,
-                cantidad,
-                nombre,
-                email,
-                telefono,
-                documento,
-                total
+            // Llamar a Edge Function /create-order
+            fetch(FUNCTIONS_BASE + "/create-order", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    full_name: nombre,
+                    email: email,
+                    phone: telefono,
+                    access_type: tipo === 'vip' ? 'vip' : 'general',
+                    stage: etapa,
+                    quantity: cantidad
+                })
+            })
+            .then(r => r.json().then(d => ({ ok: r.ok, data: d })))
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(res.data?.error || 'Error creando orden');
+                }
+
+                const orderData = res.data;
+                
+                // Guardar orden en localStorage
+                var orders = JSON.parse(localStorage.getItem("sincity_orders") || "[]");
+                orders.unshift({ 
+                    id: orderData.order_id, 
+                    name: nombre, 
+                    at: Date.now(),
+                    amount: orderData.amount
+                });
+                localStorage.setItem("sincity_orders", JSON.stringify(orders.slice(0, 10)));
+
+                // Esperar a que Bold cargue
+                return new Promise((resolve, reject) => {
+                    var tries = 0;
+                    var t = setInterval(() => {
+                        if (window.BoldCheckout) { 
+                            clearInterval(t); 
+                            resolve(orderData); 
+                        } else if (++tries > 50) { 
+                            clearInterval(t); 
+                            reject(new Error("Bold no cargó. Recarga la página e intenta de nuevo.")); 
+                        }
+                    }, 100);
+                });
+            })
+            .then(orderData => {
+                // Iniciar Bold Checkout
+                window.boldPaymentButton({
+                    orderId: orderData.order_id,
+                    currency: orderData.currency,
+                    amount: String(orderData.amount),
+                    ident: orderData.ident,
+                    description: orderData.description,
+                    redirectionUrl: orderData.redirection_url,
+                    customerEmail: email,
+                    customerName: nombre,
+                    customerPhone: telefono.replace(/\D/g, ""),
+                });
+            })
+            .catch(err => {
+                btn.disabled = false;
+                btn.textContent = 'Pagar con Bold';
+                alert('Error: ' + (err.message || 'No se pudo procesar el pago'));
+                console.error('Payment error:', err);
             });
-
-            // Simulación - En producción, esto vendría de tu backend
-            const orderId = 'SIN_CITY_' + Date.now();
-            
-            alert(`Orden creada: ${orderId}\nTotal: $${total.toLocaleString()}\n\nIntegración con Bold configurando...`);
-            
-            // Aquí irá la integración real con Bold:
-            // window.boldCheckout.openCheckout({
-            //     publicKey: 'TU_PUBLIC_KEY',
-            //     orderId: orderId,
-            //     onClose: function() {},
-            //     onPaymentComplete: function() {}
-            // });
         }
 
         // Inicializar precios
