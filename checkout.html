@@ -1,12 +1,9 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comprar Boletas - Sin City Fest 2026</title>
-    
-    <!-- Bold Checkout Script -->
-    <script src="https://checkout.bold.co/library/boldPaymentButton.js"></script>
     
     <style>
         * {
@@ -290,6 +287,43 @@
                 padding: 25px;
             }
         }
+
+        /* ---- Añadidos para el flujo de pago (misma estética) ---- */
+        select:disabled, input:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .stage-hint {
+            margin-top: 6px;
+            font-size: 0.8rem;
+            color: var(--color-yellow);
+            letter-spacing: 1px;
+        }
+
+        .bold-note {
+            color: var(--color-yellow);
+            text-shadow: 2px 2px 0 var(--color-black);
+            font-size: 1.05rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #bold-slot {
+            display: flex;
+            justify-content: center;
+            min-height: 64px;
+            margin: 10px 0 25px;
+        }
+
+        .edit-wrap {
+            text-align: center;
+        }
+
+        .edit-wrap .back-button {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
@@ -315,19 +349,23 @@
                         <option value="vip">VIP Access</option>
                     </select>
                 </div>
+
+                <div>
+                    <label for="ticket-stage">Etapa de Venta:</label>
+                    <select id="ticket-stage" onchange="calcularPrecio()">
+                        <option value="">Selecciona etapa...</option>
+                        <option value="1">Etapa 1</option>
+                        <option value="2">Etapa 2</option>
+                        <option value="3">Etapa 3</option>
+                    </select>
+                </div>
             </div>
 
             <div class="form-group">
                 <div>
                     <label for="quantity">Cantidad de Boletas:</label>
-                    <input type="number" id="quantity" value="1" min="1" max="10" onchange="calcularPrecio()">
+                    <input type="number" id="quantity" value="1" min="1" max="10" onchange="calcularPrecio()" oninput="calcularPrecio()">
                 </div>
-            </div>
-
-            <div class="form-group">
-                <p style="color: var(--color-yellow); font-size: 0.9rem;">
-                    <strong>Etapa actual:</strong> Etapa 1 (E1)
-                </p>
             </div>
         </div>
 
@@ -374,7 +412,7 @@
             </div>
         </div>
 
-        <button class="checkout-button" onclick="procesarPago()">Proceder al Pago con Bold</button>
+        <button class="checkout-button" id="pay-btn" type="button" onclick="procesarPago()">Proceder al Pago con Bold</button>
 
                 <div id="bold-checkout"></div>
             </div>
@@ -382,117 +420,202 @@
     </div>
 
     <script>
+        // ===== Configuración =====
+        const SUPABASE_URL = "https://tpdormyzwodptmtdksrs.supabase.co";
+        const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwZG9ybXl6d29kcHRtdGRrc3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMzU4MjYsImV4cCI6MjEwNjYxMTgyNn0.elK5v13Ufz1ogpykGnE0713OuMha6f03djTnIgYJ7iY";
+        const FUNCTIONS_BASE = SUPABASE_URL + "/functions/v1";
+
+        // Solo para MOSTRAR el precio. El cobro real lo calcula el servidor (create-order).
         const precios = {
-            general: { E1: 25000, E2: 30000, E3: 35000 },
-            vip: { E1: 35000, E2: 40000, E3: 45000 }
+            general: { 1: 25000, 2: 30000, 3: 35000 },
+            vip: { 1: 35000, 2: 40000, 3: 45000 }
         };
-        
-        const currentStage = "E1"; // Etapa actual (modificar aquí para cambiar de etapa)
+
+        function $(id) { return document.getElementById(id); }
 
         function calcularPrecio() {
-            const type = document.getElementById('ticket-type').value;
-            const quantity = parseInt(document.getElementById('quantity').value) || 1;
+            const type = $('ticket-type').value;
+            const stage = $('ticket-stage').value;
+            let quantity = parseInt($('quantity').value) || 1;
+            if (quantity < 1) quantity = 1;
+            if (quantity > 10) quantity = 10;
 
             let unitPrice = 0;
-            if (type && precios[type][currentStage]) {
-                unitPrice = precios[type][currentStage];
+            if (type && stage && precios[type] && precios[type][stage]) {
+                unitPrice = precios[type][stage];
             }
 
             const total = unitPrice * quantity;
 
-            document.getElementById('unit-price').textContent = '$' + unitPrice.toLocaleString();
-            document.getElementById('qty-display').textContent = quantity;
-            document.getElementById('total-price').textContent = '$' + total.toLocaleString();
+            $('unit-price').textContent = '$' + unitPrice.toLocaleString('es-CO');
+            $('qty-display').textContent = quantity;
+            $('total-price').textContent = '$' + total.toLocaleString('es-CO');
         }
 
-        const SUPABASE_URL = "https://tpdormyzwodptmtdksrs.supabase.co";
-        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwZG9ybXl6d29kcHRtdGRrc3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMzU4MjYsImV4cCI6MjEwNjYxMTgyNn0.elK5v13Ufz1ogpykGnE0713OuMha6f03djTnIgYJ7iY";
+        // La etapa vigente la define el servidor (tabla sale_stage): se muestra y se bloquea.
+        fetch(SUPABASE_URL + "/rest/v1/sale_stage?select=current_stage&limit=1", {
+            headers: { apikey: ANON_KEY, Authorization: "Bearer " + ANON_KEY }
+        })
+        .then(r => r.json())
+        .then(rows => {
+            if (rows && rows[0] && rows[0].current_stage) {
+                const n = String(rows[0].current_stage).replace(/\D/g, '');
+                const sel = $('ticket-stage');
+                sel.value = n;
+                sel.disabled = true;
+                const hint = document.createElement('div');
+                hint.className = 'stage-hint';
+                hint.textContent = 'Etapa vigente de venta';
+                sel.parentNode.appendChild(hint);
+                calcularPrecio();
+            }
+        })
+        .catch(() => { /* si falla, el usuario ve el precio de la etapa elegida; el servidor cobra el correcto */ });
 
+        // ===== Bloqueo del formulario mientras se paga =====
+        const CAMPOS = ['ticket-type', 'ticket-stage', 'quantity', 'nombre', 'email', 'telefono', 'documento'];
+        let etapaBloqueadaPorServidor = false;
+
+        function bloquearFormulario(bloquear) {
+            CAMPOS.forEach(id => {
+                const el = $(id);
+                if (!el) return;
+                if (id === 'ticket-stage') {
+                    if (bloquear) { etapaBloqueadaPorServidor = el.disabled; el.disabled = true; }
+                    else { el.disabled = etapaBloqueadaPorServidor; }
+                } else {
+                    el.disabled = bloquear;
+                }
+            });
+            $('pay-btn').style.display = bloquear ? 'none' : 'block';
+            if (!bloquear) $('bold-checkout').innerHTML = '';
+        }
+
+        // ===== Botón de Bold =====
+        function montarBotonBold(d, comprador) {
+            const cont = $('bold-checkout');
+            cont.innerHTML = '';
+
+            const nota = document.createElement('p');
+            nota.className = 'bold-note';
+            nota.textContent = 'Tu orden está lista. Toca el botón de Bold para pagar.';
+            cont.appendChild(nota);
+
+            const slot = document.createElement('div');
+            slot.id = 'bold-slot';
+            cont.appendChild(slot);
+
+            const s = document.createElement('script');
+            s.setAttribute('data-bold-button', 'dark-L');
+            s.setAttribute('data-order-id', d.order_id);
+            s.setAttribute('data-currency', d.currency);
+            s.setAttribute('data-amount', String(d.amount));
+            s.setAttribute('data-api-key', d.api_key);
+            s.setAttribute('data-integrity-signature', d.integrity_signature);
+            s.setAttribute('data-redirection-url', d.redirection_url);
+            s.setAttribute('data-description', d.description || 'Sin City Fest');
+
+            const cliente = {
+                email: comprador.email,
+                fullName: comprador.nombre,
+                phone: comprador.telefono.replace(/\D/g, '').replace(/^57(?=\d{10}$)/, ''),
+                dialCode: '+57'
+            };
+            if (/^\d{5,}$/.test(comprador.documento)) {
+                cliente.documentNumber = comprador.documento;
+                cliente.documentType = 'CC';
+            }
+            s.setAttribute('data-customer-data', JSON.stringify(cliente));
+            slot.appendChild(s);
+
+            // La librería de Bold debe cargarse DESPUÉS de que el botón configurado esté en el DOM.
+            const vieja = $('bold-lib-script');
+            if (vieja) vieja.remove();
+            const lib = document.createElement('script');
+            lib.id = 'bold-lib-script';
+            lib.src = 'https://checkout.bold.co/library/boldPaymentButton.js';
+            document.body.appendChild(lib);
+
+            const wrap = document.createElement('div');
+            wrap.className = 'edit-wrap';
+            const edit = document.createElement('button');
+            edit.type = 'button';
+            edit.className = 'back-button';
+            edit.textContent = 'Cambiar datos o cantidad';
+            edit.addEventListener('click', () => bloquearFormulario(false));
+            wrap.appendChild(edit);
+            cont.appendChild(wrap);
+
+            cont.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // ===== Crear la orden y mostrar el pago =====
         function procesarPago() {
-            const tipo = document.getElementById('ticket-type').value;
-            const cantidad = parseInt(document.getElementById('quantity').value);
-            const nombre = document.getElementById('nombre').value;
-            const email = document.getElementById('email').value;
-            const telefono = document.getElementById('telefono').value;
+            const comprador = {
+                tipo: $('ticket-type').value,
+                cantidad: parseInt($('quantity').value),
+                nombre: $('nombre').value.trim(),
+                email: $('email').value.trim(),
+                telefono: $('telefono').value.trim(),
+                documento: $('documento').value.trim()
+            };
 
-            // Validar campos
-            if (!tipo || !nombre || !email || !telefono || !cantidad) {
+            if (!comprador.tipo || !comprador.nombre || !comprador.email || !comprador.telefono || !comprador.cantidad) {
                 alert('Por favor completa todos los campos');
                 return;
             }
+            if (!/^\S+@\S+\.\S+$/.test(comprador.email)) {
+                alert('Escribe un correo válido');
+                return;
+            }
+            if (comprador.telefono.replace(/\D/g, '').length < 7) {
+                alert('Escribe un teléfono válido');
+                return;
+            }
+            if (comprador.cantidad < 1 || comprador.cantidad > 10) {
+                alert('La cantidad debe estar entre 1 y 10');
+                return;
+            }
 
-            const total = (precios[tipo][currentStage] * cantidad);
-
-            // Deshabilitar botón mientras se procesa
-            const btn = event.target;
+            const btn = $('pay-btn');
             btn.disabled = true;
             btn.textContent = 'Procesando...';
 
-            // Llamar a función RPC create_order_rpc
-            fetch(SUPABASE_URL + "/rest/v1/rpc/create_order_rpc", {
+            // El servidor decide la etapa y el precio: solo enviamos tipo, cantidad y datos.
+            fetch(FUNCTIONS_BASE + "/create-order", {
                 method: "POST",
-                headers: { 
-                    "Content-Type": "application/json",
-                    "apikey": SUPABASE_KEY
-                },
+                headers: { "Content-Type": "application/json", apikey: ANON_KEY },
                 body: JSON.stringify({
-                    p_full_name: nombre,
-                    p_email: email,
-                    p_phone: telefono,
-                    p_access_type: tipo === 'vip' ? 'vip' : 'general',
-                    p_stage: currentStage,
-                    p_quantity: cantidad
+                    full_name: comprador.nombre,
+                    email: comprador.email,
+                    phone: comprador.telefono,
+                    access_type: comprador.tipo,
+                    quantity: comprador.cantidad
                 })
             })
             .then(r => r.json().then(d => ({ ok: r.ok, data: d })))
             .then(res => {
-                if (!res.ok) {
-                    throw new Error(res.data?.[0]?.error || 'Error creando orden');
+                if (!res.ok || !res.data || !res.data.integrity_signature) {
+                    throw new Error((res.data && res.data.error) || 'Error creando orden');
                 }
+                const orderData = res.data;
 
-                const orderData = res.data?.[0] || res.data;
-                
-                // Guardar orden en localStorage
-                var orders = JSON.parse(localStorage.getItem("sincity_orders") || "[]");
-                orders.unshift({ 
-                    id: orderData.order_id, 
-                    name: nombre, 
-                    at: Date.now(),
-                    amount: orderData.amount
-                });
-                localStorage.setItem("sincity_orders", JSON.stringify(orders.slice(0, 10)));
+                // Guardar la orden para poder recuperar las boletas si se cierra la pestaña
+                try {
+                    const orders = JSON.parse(localStorage.getItem("sincity_orders") || "[]");
+                    orders.unshift({ id: orderData.order_id, name: comprador.nombre, at: Date.now(), amount: orderData.amount });
+                    localStorage.setItem("sincity_orders", JSON.stringify(orders.slice(0, 10)));
+                    localStorage.setItem("sincity_last_order", orderData.order_id);
+                } catch (e) {}
 
-                // Esperar a que Bold cargue
-                return new Promise((resolve, reject) => {
-                    var tries = 0;
-                    var t = setInterval(() => {
-                        if (window.BoldCheckout) { 
-                            clearInterval(t); 
-                            resolve(orderData); 
-                        } else if (++tries > 50) { 
-                            clearInterval(t); 
-                            reject(new Error("Bold no cargó. Recarga la página e intenta de nuevo.")); 
-                        }
-                    }, 100);
-                });
-            })
-            .then(orderData => {
-                // Iniciar Bold Checkout
-                window.boldPaymentButton({
-                    orderId: orderData.order_id,
-                    currency: orderData.currency,
-                    amount: String(orderData.amount),
-                    ident: orderData.ident,
-                    description: orderData.description,
-                    redirectionUrl: orderData.redirection_url,
-                    customerEmail: email,
-                    customerName: nombre,
-                    customerPhone: telefono.replace(/\D/g, ""),
-                });
+                btn.disabled = false;
+                btn.textContent = 'Proceder al Pago con Bold';
+                bloquearFormulario(true);
+                montarBotonBold(orderData, comprador);
             })
             .catch(err => {
                 btn.disabled = false;
-                btn.textContent = 'Pagar con Bold';
+                btn.textContent = 'Proceder al Pago con Bold';
                 alert('Error: ' + (err.message || 'No se pudo procesar el pago'));
                 console.error('Payment error:', err);
             });
