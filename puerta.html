@@ -2,809 +2,326 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="robots" content="noindex, nofollow">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Puerta Sin City">
-    <link rel="manifest" href="/puerta.webmanifest">
-    <title>Puerta · Sin City Fest</title>
-
-    <!-- Supabase JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="robots" content="noindex">
+    <title>Puerta - Sin City Fest 2026</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --color-red: #E63946; --color-yellow: #F4D03F; --color-black: #1A1A1A; --color-cream: #E8DCC0; --ok: #2ecc71; --warn: #f39c12; }
         @font-face {
             font-family: 'Barbra-Regular';
             src: url('https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/Barbra-Regular.otf?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L0JhcmJyYS1SZWd1bGFyLm90ZiIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3OTEwNDQ2OTYsImV4cCI6MTgyMjU4MDY5Nn0.jR0luJ2XcTGUXLwEe0I-nCTx4UDVcvoBAenS9bLZopnGTA0UCSFyDQ6XnDcQZsc2poGRZqwVQVD2CBebW1w99g') format('opentype');
             font-weight: 400;
         }
-
         @font-face {
             font-family: 'LexieReadable-Bold';
             src: url('https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/LexieReadable-Bold.ttf?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L0xleGllUmVhZGFibGUtQm9sZC50dGYiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkxMDQ0NzEzLCJleHAiOjE4MjI1ODA3MTN9.ffDyupRpB1FlCCxas35agP6dI0YAvDZ-GPfE5c500mbbKJQZ-aqFZld0dueF1UOZoc60GL3uAPhGna-uxB96xQ') format('truetype');
             font-weight: 700;
         }
-
-        :root {
-            --color-red: #E63946;
-            --color-yellow: #F4D03F;
-            --color-black: #1A1A1A;
-            --color-cream: #E8DCC0;
-            --display: 'Barbra-Regular', serif;
-            --text: 'LexieReadable-Bold', sans-serif;
-            --safe-top: env(safe-area-inset-top, 0px);
-            --safe-bottom: env(safe-area-inset-bottom, 0px);
-        }
-
-        * { box-sizing: border-box; }
-        html, body { height: 100%; margin: 0; }
-        
-        body {
-            background: var(--color-black);
-            color: var(--color-cream);
-            font-family: var(--text);
-            -webkit-font-smoothing: antialiased;
-            -webkit-tap-highlight-color: transparent;
-            overscroll-behavior: none;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-
-        button, input, select, textarea { font: inherit; color: inherit; }
-        :focus-visible { outline: 3px solid var(--color-yellow); outline-offset: 2px; }
-        .hidden { display: none !important; }
-
-        /* ========== LOGIN ========== */
-        #login {
-            min-height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: calc(32px + var(--safe-top)) 28px calc(32px + var(--safe-bottom));
-        }
-
-        .login-box {
-            width: 100%;
-            max-width: 420px;
-            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
-            border: 3px solid var(--color-red);
-            padding: 40px;
-            text-align: center;
-            box-shadow: 6px 6px 0 var(--color-black);
-        }
-
-        .login-box h1 {
-            font-family: var(--display);
-            font-size: 2.2rem;
-            color: var(--color-yellow);
-            text-shadow: 3px 3px 0 var(--color-black);
-            margin: 0 0 8px;
-            letter-spacing: 2px;
-        }
-
-        .login-box h2 {
-            font-family: var(--display);
-            font-size: 1.4rem;
-            color: var(--color-red);
-            margin: 0 0 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .login-box p {
-            color: var(--color-cream);
-            margin: 0 0 20px;
-            line-height: 1.45;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--color-yellow);
-            font-weight: bold;
-            margin-bottom: 6px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--color-yellow);
-            background: rgba(0, 0, 0, 0.5);
-            color: var(--color-cream);
-            font-size: 1rem;
-            font-family: var(--text);
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--color-cream);
-            box-shadow: 0 0 10px rgba(232, 220, 192, 0.3);
-        }
-
-        #pin {
-            font-size: 2rem;
-            letter-spacing: 0.4em;
-            text-align: center;
-            font-family: var(--display);
-        }
-
-        .btn-main {
-            display: block;
-            width: 100%;
-            margin-top: 20px;
-            padding: 16px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            background: var(--color-yellow);
-            color: var(--color-red);
-            border: 3px solid var(--color-black);
-            font-family: var(--display);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            box-shadow: 4px 4px 0 var(--color-black);
-            text-decoration: none;
-        }
-
-        .btn-main:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0 var(--color-black);
-        }
-
-        .btn-main:active {
-            transform: translate(0, 0);
-            box-shadow: 2px 2px 0 var(--color-black);
-        }
-
-        .btn-main:disabled {
-            opacity: 0.6;
-            cursor: wait;
-        }
-
-        .form-msg {
-            min-height: 1.4em;
-            margin-top: 12px;
-            color: #ff8a98;
-            font-weight: 600;
-        }
-
-        .form-msg.ok {
-            color: #7fe0a6;
-        }
-
-        /* ========== SCANNER ========== */
-        #scanner {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            background: #000;
-        }
-
-        .top {
-            padding: calc(10px + var(--safe-top)) 16px 10px;
-            background: linear-gradient(135deg, rgba(22, 11, 35, 0.98) 0%, rgba(26, 26, 26, 0.98) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            border-bottom: 3px solid var(--color-yellow);
-        }
-
-        .night-label {
-            font-family: var(--display);
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: var(--color-yellow);
-            text-shadow: 2px 2px 0 var(--color-black);
-        }
-
-        .night-sub {
-            font-size: 0.8rem;
-            color: var(--color-cream);
-            margin-top: 2px;
-        }
-
-        .count {
-            text-align: right;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .count b {
-            font-family: var(--display);
-            font-size: 1.8rem;
-            display: block;
-            line-height: 1;
-            color: var(--color-yellow);
-            text-shadow: 2px 2px 0 var(--color-black);
-        }
-
-        .count span {
-            font-size: 0.75rem;
-            color: var(--color-cream);
-        }
-
-        .sync-state {
-            font-size: 0.82rem;
-            line-height: 1.3;
-            color: var(--color-cream);
-        }
-
-        .sync-state b {
-            color: var(--color-yellow);
-            font-weight: bold;
-        }
-
-        .sync-state .dot {
-            display: inline-block;
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            margin-right: 6px;
-            vertical-align: 1px;
-            background: #8a7aa3;
-        }
-
-        .sync-state .dot.on {
-            background: #7fe0a6;
-        }
-
-        .sync-state .dot.warn {
-            background: var(--color-yellow);
-        }
-
-        .cam {
-            position: relative;
-            flex: 1;
-            overflow: hidden;
-            background: #000;
-        }
-
-        #video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .frame {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: min(68vw, 300px);
-            aspect-ratio: 1;
-            transform: translate(-50%, -50%);
-            border-radius: 22px;
-            box-shadow: 0 0 0 100vmax rgba(10, 4, 20, 0.45);
-            pointer-events: none;
-        }
-
-        .frame::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 22px;
-            border: 3px solid var(--color-yellow);
-            -webkit-mask: linear-gradient(#000 0 0) top left/34% 34% no-repeat,
-                          linear-gradient(#000 0 0) top right/34% 34% no-repeat,
-                          linear-gradient(#000 0 0) bottom left/34% 34% no-repeat,
-                          linear-gradient(#000 0 0) bottom right/34% 34% no-repeat;
-            mask: linear-gradient(#000 0 0) top left/34% 34% no-repeat,
-                  linear-gradient(#000 0 0) top right/34% 34% no-repeat,
-                  linear-gradient(#000 0 0) bottom left/34% 34% no-repeat,
-                  linear-gradient(#000 0 0) bottom right/34% 34% no-repeat;
-        }
-
-        .bottom {
-            background: linear-gradient(135deg, rgba(22, 11, 35, 0.98) 0%, rgba(26, 26, 26, 0.98) 100%);
-            border-top: 3px solid var(--color-yellow);
-            padding: 10px 12px calc(10px + var(--safe-bottom));
-            display: grid;
-            grid-template-columns: 1fr auto auto;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .btn-small {
-            padding: 12px 14px;
-            font-size: 0.92rem;
-            font-weight: bold;
-            border-radius: 8px;
-            border: 2px solid var(--color-black);
-            background: var(--color-yellow);
-            color: var(--color-red);
-            cursor: pointer;
-            font-family: var(--display);
-            text-transform: uppercase;
-            box-shadow: 2px 2px 0 var(--color-black);
-        }
-
-        .btn-small:hover {
-            transform: translate(-1px, -1px);
-            box-shadow: 3px 3px 0 var(--color-black);
-        }
-
-        /* ========== RESULTADO ========== */
-        #verdict {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.95);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-            z-index: 100;
-        }
-
-        .verdict-box {
-            text-align: center;
-            max-width: 500px;
-        }
-
-        .verdict-icon {
-            font-size: 4rem;
-            margin-bottom: 16px;
-            display: block;
-        }
-
-        .verdict-title {
-            font-family: var(--display);
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .verdict-ok .verdict-title {
-            color: #7fe0a6;
-            text-shadow: 2px 2px 0 var(--color-black);
-        }
-
-        .verdict-fail .verdict-title {
-            color: var(--color-red);
-            text-shadow: 2px 2px 0 var(--color-black);
-        }
-
-        .verdict-name {
-            font-family: var(--display);
-            font-size: 1.4rem;
-            color: var(--color-yellow);
-            margin-bottom: 8px;
-            text-shadow: 1px 1px 0 var(--color-black);
-        }
-
-        .verdict-details {
-            font-size: 1rem;
-            color: var(--color-cream);
-            margin-bottom: 12px;
-        }
-
-        .verdict-message {
-            font-size: 0.95rem;
-            color: var(--color-cream);
-            line-height: 1.4;
-            margin-bottom: 24px;
-        }
-
-        .conflict-alert {
-            background: #ff8a98;
-            color: white;
-            padding: 12px;
-            text-align: center;
-            font-weight: bold;
-            position: fixed;
-            top: 60px;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        @keyframes slideDown {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
-        }
+        html, body { width: 100%; min-height: 100%; background: var(--color-red); color: var(--color-cream); font-family: 'LexieReadable-Bold', sans-serif; padding: 14px 12px 40px; -webkit-tap-highlight-color: transparent; }
+        .frame { max-width: 560px; margin: 0 auto; background: white; padding: 8px; box-shadow: 0 15px 50px rgba(0,0,0,.6); }
+        .panel { background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 22px 18px; border: 2px solid var(--color-black); }
+        h1 { font-family: 'Barbra-Regular', serif; font-size: 2.4rem; text-align: center; color: var(--color-cream); text-shadow: 3px 3px 0 var(--color-black); line-height: 1; }
+        .sub { text-align: center; color: var(--color-yellow); margin: 6px 0 18px; text-shadow: 2px 2px 0 var(--color-black); }
+        label { display: block; margin: 14px 0 6px; font-size: .9rem; letter-spacing: 1px; }
+        input { width: 100%; padding: 13px; border: 2px solid var(--color-cream); background: rgba(0,0,0,.5); color: var(--color-cream); font-family: inherit; font-size: 1.05rem; border-radius: 0; }
+        input:focus { outline: none; border-color: var(--color-yellow); }
+        .btn { width: 100%; margin-top: 16px; padding: 14px; background: var(--color-yellow); color: var(--color-red); border: 3px solid var(--color-black); font-family: 'Barbra-Regular', serif; font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; box-shadow: 4px 4px 0 var(--color-black); }
+        .btn:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--color-black); }
+        .btn.small { width: auto; margin: 0; padding: 9px 14px; font-size: .95rem; }
+        .btn.ghost { background: transparent; color: var(--color-cream); border-color: var(--color-cream); box-shadow: none; }
+        .err { margin-top: 12px; color: #ff8c94; text-align: center; min-height: 1.2em; }
+        #scanner { display: none; }
+        .bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; font-size: .85rem; margin-bottom: 12px; }
+        .pill { padding: 4px 10px; border: 2px solid var(--color-cream); font-size: .8rem; letter-spacing: 1px; }
+        .pill.on { border-color: var(--ok); color: var(--ok); }
+        .pill.off { border-color: var(--warn); color: var(--warn); }
+        .cam { position: relative; background: #000; border: 3px solid var(--color-cream); aspect-ratio: 1 / 1; overflow: hidden; }
+        .cam video { width: 100%; height: 100%; object-fit: cover; }
+        .cam .aim { position: absolute; inset: 18%; border: 3px dashed rgba(244,208,63,.85); pointer-events: none; }
+        .cam .nocam { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; color: var(--color-cream); }
+        #result { margin-top: 14px; padding: 18px 12px; text-align: center; border: 4px solid var(--color-black); background: #333; min-height: 118px; display: flex; flex-direction: column; justify-content: center; gap: 6px; }
+        #result .big { font-family: 'Barbra-Regular', serif; font-size: 2.1rem; letter-spacing: 2px; line-height: 1.05; color: #fff; text-shadow: 2px 2px 0 rgba(0,0,0,.5); }
+        #result .det { font-size: 1.05rem; color: #fff; }
+        #result.ok { background: var(--ok); } #result.used { background: var(--warn); } #result.bad { background: var(--color-red); } #result.offline { background: #2980b9; }
+        .stats { display: flex; justify-content: space-between; margin-top: 12px; font-size: .95rem; }
+        .stats b { color: var(--color-yellow); font-size: 1.3rem; }
+        .manual { display: flex; gap: 8px; margin-top: 14px; }
+        .manual input { flex: 1; }
+        .tools { display: flex; justify-content: space-between; gap: 8px; margin-top: 14px; }
+        .note { margin-top: 14px; font-size: .78rem; opacity: .7; text-align: center; }
     </style>
 </head>
 <body>
-    <!-- LOGIN -->
-    <div id="login">
-        <div class="login-box">
-            <h1>SIN CITY</h1>
-            <h2>Puerta</h2>
-            <p>Escanea el código QR de la boleta</p>
-            
-            <div class="form-group">
-                <label for="device">Nombre de esta puerta:</label>
-                <input type="text" id="device" placeholder="Ej: Puerta 1" value="">
-            </div>
+<div class="frame"><div class="panel">
 
-            <div class="form-group">
-                <label for="pin">PIN de autenticación:</label>
-                <input type="password" id="pin" class="pin" placeholder="••••" maxlength="4">
-            </div>
+    <section id="login">
+        <h1>PUERTA</h1>
+        <p class="sub">Sin City Fest - Control de acceso</p>
+        <label for="pin">PIN de la puerta</label>
+        <input id="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="••••••">
+        <label for="device">Nombre de este teléfono</label>
+        <input id="device" type="text" maxlength="40" placeholder="Puerta 1">
+        <label for="night">Noche</label>
+        <input id="night" type="date">
+        <button class="btn" id="enter" type="button">Entrar</button>
+        <div class="err" id="login-err"></div>
+    </section>
 
-            <div id="pin-msg" class="form-msg"></div>
-            <button class="btn-main" onclick="doLogin()">Descargar Boletas</button>
+    <section id="scanner">
+        <div class="bar">
+            <span id="who"></span>
+            <span class="pill on" id="net">EN LÍNEA</span>
         </div>
-    </div>
-
-    <!-- SCANNER -->
-    <div id="scanner" class="hidden">
-        <div class="top">
-            <div>
-                <div class="night-label" id="night-label">Sin City Fest</div>
-                <div class="night-sub" id="night-sub">Halloween Edition</div>
-            </div>
-            <div class="count">
-                <b id="count-in">0</b>
-                <span id="count-sub">entradas</span>
-            </div>
-        </div>
-
         <div class="cam">
-            <video id="video"></video>
-            <div class="frame"></div>
+            <video id="video" playsinline muted></video>
+            <div class="aim"></div>
+            <div class="nocam" id="nocam" style="display:none">Cámara no disponible. Usa el código manual.</div>
         </div>
-
-        <div class="bottom">
-            <div class="sync-state" id="sync-state">
-                <span class="dot on"></span>
-                <b>Conectado</b><br>
-                Lista actualizada hace un momento
-            </div>
-            <button class="btn-small" id="search-btn" onclick="openSearch()">🔍 Buscar</button>
-            <button class="btn-small" id="sync-btn" onclick="syncData()">🔄 Sincronizar</button>
+        <div id="result"><div class="big">LISTO</div><div class="det">Apunta al QR</div></div>
+        <div class="stats">
+            <span>Entradas esta noche: <b id="count">0</b></span>
+            <span>Por subir: <b id="pending">0</b></span>
         </div>
-    </div>
-
-    <!-- RESULTADO -->
-    <div id="verdict" class="hidden">
-        <div class="verdict-box">
-            <span class="verdict-icon" id="verdict-icon">✓</span>
-            <div class="verdict-title" id="verdict-title">Puede entrar</div>
-            <div class="verdict-name" id="verdict-name">Visitante</div>
-            <div class="verdict-details" id="verdict-details">VIP - Etapa 1</div>
-            <div class="verdict-message" id="verdict-message">Entrada registrada exitosamente</div>
+        <div class="manual">
+            <input id="manual" type="text" autocomplete="off" placeholder="Pegar código del QR">
+            <button class="btn small" id="manual-go" type="button">Validar</button>
         </div>
-    </div>
+        <div class="tools">
+            <button class="btn small ghost" id="sync-btn" type="button">Sincronizar</button>
+            <button class="btn small ghost" id="logout" type="button">Salir</button>
+        </div>
+        <p class="note" id="syncnote"></p>
+    </section>
 
-    <!-- MÓDULO QR VALIDATION -->
-    <script>
-        // =====================================================
-        // CONFIGURACIÓN SUPABASE
-        // =====================================================
-        const SUPABASE_URL = "https://tpdormyzwodptmtdksrs.supabase.co";
-        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwZG9ybXl6d29kcHRtdGRrc3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMzU4MjYsImV4cCI6MjEwNjYxMTgyNn0.elK5v13Ufz1ogpykGnE0713OuMha6f03djTnIgYJ7iY";
-        const EVENT_ID = "sincity-fest-2026-10";
-        
-        let supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        let deviceName = "";
-        let verdictOpen = false;
+</div></div>
 
-        function $(id) {
-            return document.getElementById(id);
-        }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
+<script>
+(function () {
+    // ===== Configuración =====
+    var SUPABASE_URL = "https://tpdormyzwodptmtdksrs.supabase.co";
+    var ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwZG9ybXl6d29kcHRtdGRrc3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMzU4MjYsImV4cCI6MjEwNjYxMTgyNn0.elK5v13Ufz1ogpykGnE0713OuMha6f03djTnIgYJ7iY";
+    var ENDPOINT = SUPABASE_URL + "/functions/v1/door-sync";
+    var KEY_CFG = "sc_door_cfg", KEY_CACHE = "sc_door_cache", KEY_PEND = "sc_door_pending";
+    var PREFIX = "SCF1";
 
-        // =====================================================
-        // LOGIN
-        // =====================================================
-        function doLogin() {
-            const pin = $("pin").value.replace(/\D/g, "");
-            const dev = $("device").value.trim().slice(0, 40);
+    var $ = function (id) { return document.getElementById(id); };
+    var st = { pin: "", device: "", night: "", tickets: {}, checkins: {}, pending: [], pub: null, verifyKey: null, since: null, online: true, last: { code: "", at: 0 }, busy: false };
 
-            $("pin-msg").textContent = "";
+    function today() { return new Date().toLocaleDateString("en-CA", { timeZone: "America/Bogota" }); }
+    function load(k, d) { try { var v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch (e) { return d; } }
+    function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+    function saveCache() { save(KEY_CACHE, { tickets: st.tickets, checkins: st.checkins, pub: st.pub, since: st.since }); save(KEY_PEND, st.pending); }
 
-            if (!dev) {
-                $("pin-msg").textContent = "Escribe el nombre de esta puerta (Ej: Puerta 1)";
-                $("device").focus();
-                return;
-            }
+    // ===== Verificación de firma (offline) =====
+    function fromB64url(s) {
+        var pad = "=".repeat((4 - (s.length % 4)) % 4);
+        var bin = atob(s.replace(/-/g, "+").replace(/_/g, "/") + pad);
+        var out = new Uint8Array(bin.length);
+        for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+        return out;
+    }
+    function parseQR(qr) {
+        var p = String(qr || "").trim().split(".");
+        if (p.length !== 4 || p[0] !== PREFIX || !p[1] || !/^[GV]$/.test(p[2]) || !p[3]) return null;
+        return { token: p[1], tipo: p[2], msg: p[0] + "." + p[1] + "." + p[2], sig: p[3] };
+    }
+    function importPub() {
+        if (!st.pub) { st.verifyKey = null; return Promise.resolve(); }
+        return crypto.subtle.importKey("jwk", st.pub, { name: "ECDSA", namedCurve: "P-256" }, false, ["verify"])
+            .then(function (k) { st.verifyKey = k; });
+    }
+    function verifySig(p) {
+        return crypto.subtle.verify({ name: "ECDSA", hash: "SHA-256" }, st.verifyKey, fromB64url(p.sig), new TextEncoder().encode(p.msg));
+    }
 
-            if (pin.length < 4) {
-                $("pin-msg").textContent = "PIN debe tener 4 dígitos";
-                return;
-            }
+    // ===== Red =====
+    function api(body, timeoutMs) {
+        var ctrl = new AbortController();
+        var t = setTimeout(function () { ctrl.abort(); }, timeoutMs || 6000);
+        body.pin = st.pin; body.device = st.device;
+        return fetch(ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json", apikey: ANON_KEY }, body: JSON.stringify(body), signal: ctrl.signal })
+            .then(function (r) { clearTimeout(t); return r.json().then(function (d) { return { status: r.status, data: d }; }); })
+            .catch(function (e) { clearTimeout(t); throw e; });
+    }
+    function setNet(on) {
+        st.online = on;
+        var n = $("net"); n.textContent = on ? "EN LÍNEA" : "SIN SEÑAL"; n.className = "pill " + (on ? "on" : "off");
+    }
 
-            deviceName = dev;
-            $("pin-msg").textContent = "✓ Acceso concedido";
-            $("pin-msg").className = "form-msg ok";
+    // ===== Resultado en pantalla =====
+    function show(cls, big, det) {
+        var r = $("result"); r.className = cls;
+        r.innerHTML = ""; var a = document.createElement("div"); a.className = "big"; a.textContent = big;
+        var b = document.createElement("div"); b.className = "det"; b.textContent = det || "";
+        r.appendChild(a); r.appendChild(b);
+        if (navigator.vibrate) navigator.vibrate(cls === "ok" || cls === "offline" ? 60 : [120, 60, 120]);
+    }
+    function tipoTxt(t) { return t === "V" ? "VIP" : "GENERAL"; }
+    function hora(iso) { try { return new Date(iso).toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit", timeZone: "America/Bogota" }); } catch (e) { return ""; } }
+    function who(t) { return (t && t.name ? t.name : "") + (t && t.n ? " · " + t.n + " de " + t.total : ""); }
+    function counters() {
+        var n = 0; Object.keys(st.checkins).forEach(function (k) { if (k.slice(-10) === st.night) n++; });
+        $("count").textContent = n; $("pending").textContent = st.pending.length;
+    }
+    function ckKey(token, night) { return token + "|" + night; }
 
-            setTimeout(() => {
-                $("login").classList.add("hidden");
-                $("scanner").classList.remove("hidden");
-                startCamera();
-            }, 500);
-        }
-
-        $("pin").addEventListener("keypress", (e) => {
-            if (e.key === "Enter") $("device").focus();
-        });
-        $("device").addEventListener("keypress", (e) => {
-            if (e.key === "Enter") doLogin();
-        });
-
-        // =====================================================
-        // CÁMARA
-        // =====================================================
-        async function startCamera() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: "environment" }
-                });
-                $("video").srcObject = stream;
-                $("video").onloadedmetadata = () => {
-                    $("video").play();
-                    startScanning();
-                };
-            } catch (e) {
-                console.error("Error accediendo cámara:", e);
-            }
-        }
-
-        // =====================================================
-        // VALIDACIÓN QR
-        // =====================================================
-        async function validateQR(token) {
-            try {
-                const night = new Date().toISOString().split('T')[0];
-                
-                const { data, error } = await supabase.rpc('validate_ticket_qr', {
-                    p_token: token,
-                    p_device: deviceName,
-                    p_night: night,
-                    p_event_id: EVENT_ID
-                });
-
-                if (error) {
-                    showResult(false, "Error", "N/A", error.message, error.message);
-                    return;
-                }
-
-                if (data.is_valid) {
-                    showResult(
-                        true,
-                        "✓ PUEDE ENTRAR",
-                        data.ticket_info?.name || "Visitante",
-                        `${data.ticket_info?.access_type || "Acceso"} - Etapa ${data.ticket_info?.stage || "?"}`,
-                        data.message
-                    );
-                } else if (data.status === "DUPLICATE") {
-                    showResult(
-                        false,
-                        "✗ DOBLE ENTRADA",
-                        data.ticket_info?.name || "Desconocido",
-                        "Esta boleta ya ha entrado",
-                        data.message
-                    );
-                    playError();
-                } else if (data.status === "REVOKED") {
-                    showResult(
-                        false,
-                        "✗ BOLETA ANULADA",
-                        "N/A",
-                        "Boleta cancelada",
-                        data.message
-                    );
-                    playError();
+    // ===== Validar un código leído (cámara o manual) =====
+    function procesarCodigo(raw) {
+        var qr = String(raw || "").trim();
+        if (!qr || st.busy) return Promise.resolve();
+        var p = parseQR(qr);
+        if (!p) { show("bad", "QR NO VÁLIDO", "No es una boleta de Sin City Fest"); return Promise.resolve(); }
+        if (!st.verifyKey) { show("bad", "SINCRONIZA", "Falta descargar la llave. Toca Sincronizar con señal."); return Promise.resolve(); }
+        st.busy = true;
+        return verifySig(p).then(function (ok) {
+            if (!ok) { show("bad", "QR FALSO", "Firma inválida"); return; }
+            var scannedAt = new Date().toISOString();
+            return api({ action: "claim", qr: qr, night: st.night, scanned_at: scannedAt }, 4500).then(function (res) {
+                setNet(true);
+                if (res.status === 401) { show("bad", "PIN CAMBIÓ", "Vuelve a entrar"); return; }
+                var d = res.data || {};
+                if (d.ok) {
+                    st.checkins[ckKey(p.token, st.night)] = { scanned_at: scannedAt, device: st.device };
+                    if (d.ticket) st.tickets[p.token] = d.ticket;
+                    show("ok", "ENTRADA OK", tipoTxt(p.tipo) + " · " + who(d.ticket));
+                } else if (d.code === "used") {
+                    st.checkins[ckKey(p.token, st.night)] = { scanned_at: d.first && d.first.scanned_at, device: d.first && d.first.device };
+                    show("used", "YA ENTRÓ", who(d.ticket) + " · " + hora(d.first && d.first.scanned_at) + " en " + ((d.first && d.first.device) || "otra puerta"));
+                } else if (d.code === "revoked") {
+                    show("bad", "ANULADA", who(d.ticket));
+                } else if (d.code === "forged") {
+                    show("bad", "QR FALSO", "Firma inválida");
+                } else if (d.code === "unknown") {
+                    show("bad", "NO EXISTE", "Boleta no registrada");
                 } else {
-                    showResult(
-                        false,
-                        "✗ CÓDIGO INVÁLIDO",
-                        "N/A",
-                        "No reconocido",
-                        data.message
-                    );
-                    playError();
+                    show("bad", "ERROR", d.error || "Intenta de nuevo");
                 }
-
-                updateStats();
-
-            } catch (err) {
-                console.error("Error validando QR:", err);
-                showResult(false, "Error", "N/A", "Intenta de nuevo", err.message);
-            }
-        }
-
-        function showResult(success, title, name, details, message) {
-            const verdict = $("verdict");
-            verdict.className = success ? "verdict-ok" : "verdict-fail";
-            
-            $("verdict-icon").textContent = success ? "✓" : "✗";
-            $("verdict-title").textContent = title;
-            $("verdict-name").textContent = name;
-            $("verdict-details").textContent = details;
-            $("verdict-message").textContent = message;
-
-            verdict.classList.remove("hidden");
-            verdictOpen = true;
-
-            if (success) playSuccess();
-
-            setTimeout(() => {
-                verdict.classList.add("hidden");
-                verdictOpen = false;
-            }, 3000);
-        }
-
-        function playSuccess() {
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.frequency.value = 800;
-            gain.gain.setValueAtTime(0.3, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
-            osc.start(ctx.currentTime);
-            osc.stop(ctx.currentTime + 0.2);
-        }
-
-        function playError() {
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.frequency.value = 300;
-            gain.gain.setValueAtTime(0.3, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
-            osc.start(ctx.currentTime);
-            osc.stop(ctx.currentTime + 0.3);
-        }
-
-        // =====================================================
-        // ESCÁNER DE CÓDIGO
-        // =====================================================
-        let scanningActive = false;
-        let lastCode = "";
-        let lastCodeTime = 0;
-
-        async function startScanning() {
-            scanningActive = true;
-            const canvas = document.createElement('canvas');
-            const video = $("video");
-            const ctx = canvas.getContext('2d');
-            
-            const scan = () => {
-                if (!scanningActive || verdictOpen) {
-                    requestAnimationFrame(scan);
-                    return;
-                }
-
-                if (video.readyState === video.HAVE_ENOUGH_DATA) {
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
-                    ctx.drawImage(video, 0, 0);
-
-                    // Simulación: buscar "QR-" en la entrada de teclado
-                    // En producción, usar librería de scanning
-                }
-
-                requestAnimationFrame(scan);
-            };
-
-            scan();
-
-            // Detectar entrada de teclado (para testing)
-            document.addEventListener('keypress', (e) => {
-                if ($("scanner").classList.contains("hidden")) return;
-                
-                const key = e.key;
-                if (key === "Enter") {
-                    const input = $("qr-input");
-                    if (input?.value) {
-                        const now = Date.now();
-                        if (input.value === lastCode && (now - lastCodeTime) < 500) {
-                            return;
-                        }
-                        lastCode = input.value;
-                        lastCodeTime = now;
-
-                        validateQR(input.value);
-                        input.value = "";
-                    }
-                }
+            }).catch(function () {
+                // Sin señal: decide con la copia local y deja la entrada en cola
+                setNet(false);
+                var t = st.tickets[p.token];
+                if (!t) { show("bad", "SIN SEÑAL", "Boleta no está en la copia local. Sincroniza con señal."); return; }
+                if (t.revoked) { show("bad", "ANULADA", who(t)); return; }
+                var k = ckKey(p.token, st.night);
+                if (st.checkins[k]) { show("used", "YA ENTRÓ", who(t) + " · " + hora(st.checkins[k].scanned_at) + " en " + (st.checkins[k].device || "")); return; }
+                st.checkins[k] = { scanned_at: scannedAt, device: st.device };
+                st.pending.push({ token: p.token, night: st.night, scanned_at: scannedAt });
+                show("offline", "ENTRADA (SIN SEÑAL)", tipoTxt(p.tipo) + " · " + who(t));
             });
+        }).catch(function () { show("bad", "ERROR", "No se pudo verificar el QR"); })
+          .then(function () { st.busy = false; counters(); saveCache(); });
+    }
+
+    // ===== Sincronizar =====
+    function sync(manual) {
+        var sending = st.pending.slice();
+        return api({ since: st.since, checkins: sending }, 15000).then(function (res) {
+            if (res.status === 401) { throw { auth: true, msg: (res.data && res.data.error) || "PIN incorrecto" }; }
+            if (res.status === 429) { throw { auth: true, msg: (res.data && res.data.error) || "Demasiados intentos" }; }
+            var d = res.data;
+            if (res.status !== 200 || !d.tickets) throw { msg: (d && d.error) || "Error del servidor" };
+            setNet(true);
+            if (d.full) { st.tickets = {}; st.checkins = {}; }
+            d.tickets.forEach(function (t) { st.tickets[t.token] = t; });
+            d.checkins.forEach(function (c) { st.checkins[ckKey(c.token, c.night)] = { scanned_at: c.scanned_at, device: c.device }; });
+            sending.forEach(function (s) { st.checkins[ckKey(s.token, s.night)] = st.checkins[ckKey(s.token, s.night)] || { scanned_at: s.scanned_at, device: st.device }; });
+            st.pending = st.pending.filter(function (p) { return sending.indexOf(p) === -1; });
+            st.pub = d.public_key; st.since = d.server_time;
+            return importPub().then(function () {
+                saveCache(); counters();
+                $("syncnote").textContent = "Sincronizado " + new Date().toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit", timeZone: "America/Bogota" }) +
+                    " · " + Object.keys(st.tickets).length + " boletas" + (d.conflicts_total ? " · ⚠ dobles usos: " + d.conflicts_total : "");
+            });
+        });
+    }
+    function syncSilencioso() { return sync().catch(function (e) { if (e && e.auth) { salir(e.msg); } else { setNet(false); } }); }
+
+    // ===== Cámara =====
+    var stream = null, loopOn = false, detector = null, canvas = document.createElement("canvas"), ctx = canvas.getContext("2d", { willReadFrequently: true });
+    function startCam() {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { $("nocam").style.display = "flex"; return; }
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false }).then(function (s) {
+            stream = s; var v = $("video"); v.srcObject = s; v.play();
+            if ("BarcodeDetector" in window) { try { detector = new BarcodeDetector({ formats: ["qr_code"] }); } catch (e) { detector = null; } }
+            loopOn = true; requestAnimationFrame(tick);
+        }).catch(function () { $("nocam").style.display = "flex"; });
+    }
+    function stopCam() { loopOn = false; if (stream) stream.getTracks().forEach(function (t) { t.stop(); }); stream = null; }
+    var lastTick = 0;
+    function onCode(code) {
+        var now = Date.now();
+        if (code === st.last.code && now - st.last.at < 3500) return;
+        st.last = { code: code, at: now };
+        procesarCodigo(code);
+    }
+    function tick(ts) {
+        if (!loopOn) return;
+        requestAnimationFrame(tick);
+        if (ts - lastTick < 130) return; lastTick = ts;
+        var v = $("video"); if (v.readyState < 2 || st.busy) return;
+        if (detector) {
+            detector.detect(v).then(function (r) { if (r && r[0]) onCode(r[0].rawValue); }).catch(function () {});
+        } else if (window.jsQR) {
+            var w = v.videoWidth, h = v.videoHeight; if (!w) return;
+            var s = Math.min(1, 640 / w); canvas.width = Math.round(w * s); canvas.height = Math.round(h * s);
+            ctx.drawImage(v, 0, 0, canvas.width, canvas.height);
+            var img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            var r = window.jsQR(img.data, img.width, img.height, { inversionAttempts: "dontInvert" });
+            if (r && r.data) onCode(r.data);
         }
+    }
 
-        // =====================================================
-        // SINCRONIZACIÓN
-        // =====================================================
-        async function syncData() {
-            $("sync-btn").disabled = true;
-            $("sync-btn").textContent = "Sincronizando...";
-
-            try {
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                updateStats();
-                $("sync-btn").textContent = "✓ Sincronizado";
-                
-                setTimeout(() => {
-                    $("sync-btn").textContent = "🔄 Sincronizar";
-                    $("sync-btn").disabled = false;
-                }, 2000);
-            } catch (err) {
-                console.error("Error sincronizando:", err);
-                $("sync-btn").textContent = "Error";
-                $("sync-btn").disabled = false;
-            }
-        }
-
-        // =====================================================
-        // ESTADÍSTICAS
-        // =====================================================
-        async function updateStats() {
-            try {
-                const night = new Date().toISOString().split('T')[0];
-                const { data } = await supabase.rpc('get_night_stats', {
-                    p_night: night,
-                    p_event_id: EVENT_ID
+    // ===== Sesión =====
+    var syncTimer = null;
+    function entrar() {
+        var pin = $("pin").value.trim(), device = $("device").value.trim() || "Puerta 1", night = $("night").value || today();
+        if (!pin) { $("login-err").textContent = "Escribe el PIN"; return; }
+        st.pin = pin; st.device = device; st.night = night;
+        $("login-err").textContent = "Verificando…"; $("enter").disabled = true;
+        var cache = load(KEY_CACHE, null);
+        if (cache) { st.tickets = cache.tickets || {}; st.checkins = cache.checkins || {}; st.pub = cache.pub; st.since = cache.since; }
+        st.pending = load(KEY_PEND, []);
+        sync().then(function () {
+            save(KEY_CFG, { pin: pin, device: device });
+            $("login").style.display = "none"; $("scanner").style.display = "block";
+            $("who").textContent = device + " · " + night;
+            counters(); startCam();
+            syncTimer = setInterval(syncSilencioso, 30000);
+        }).catch(function (e) {
+            if (e && e.auth) { $("login-err").textContent = e.msg; }
+            else if (st.verifyKey || st.pub) { // sin señal pero con copia local: se puede trabajar
+                importPub().then(function () {
+                    setNet(false); $("login").style.display = "none"; $("scanner").style.display = "block";
+                    $("who").textContent = device + " · " + night; counters(); startCam();
+                    syncTimer = setInterval(syncSilencioso, 30000);
                 });
+            } else { $("login-err").textContent = "Sin señal y sin copia local. Conéctate para el primer ingreso."; }
+        }).then(function () { $("enter").disabled = false; });
+    }
+    function salir(msg) {
+        clearInterval(syncTimer); stopCam();
+        $("scanner").style.display = "none"; $("login").style.display = "block";
+        $("login-err").textContent = msg || ""; $("pin").value = "";
+    }
 
-                if (data) {
-                    $("count-in").textContent = data.admitted || 0;
-                    $("count-sub").textContent = "entradas esta noche";
-                    
-                    if (data.conflicts_detected > 0) {
-                        const alert = document.createElement('div');
-                        alert.className = 'conflict-alert';
-                        alert.textContent = `⚠️ ${data.conflicts_detected} dobles entradas detectadas`;
-                        document.body.appendChild(alert);
-                        setTimeout(() => alert.remove(), 5000);
-                    }
-                }
-            } catch (err) {
-                console.log("No se pudieron cargar estadísticas");
-            }
-        }
+    // ===== Eventos =====
+    $("enter").addEventListener("click", entrar);
+    $("pin").addEventListener("keydown", function (e) { if (e.key === "Enter") entrar(); });
+    $("logout").addEventListener("click", function () { salir(""); });
+    $("sync-btn").addEventListener("click", function () { $("syncnote").textContent = "Sincronizando…"; sync(true).catch(function (e) { if (e && e.auth) salir(e.msg); else { setNet(false); $("syncnote").textContent = "Sin señal: " + ((e && e.msg) || "no se pudo sincronizar"); } }); });
+    $("manual-go").addEventListener("click", function () { var v = $("manual").value; $("manual").value = ""; procesarCodigo(v); });
+    $("manual").addEventListener("keydown", function (e) { if (e.key === "Enter") $("manual-go").click(); });
+    window.addEventListener("online", syncSilencioso);
 
-        // =====================================================
-        // BÚSQUEDA MANUAL
-        // =====================================================
-        function openSearch() {
-            const code = prompt("Ingresa el código QR:");
-            if (code) {
-                validateQR(code.trim());
-            }
-        }
+    var cfg = load(KEY_CFG, null);
+    $("night").value = today();
+    if (cfg) { $("device").value = cfg.device || ""; $("pin").value = cfg.pin || ""; }
 
-        // =====================================================
-        // INICIALIZACIÓN
-        // =====================================================
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("/puerta-sw.js", { scope: "/puerta" }).catch(() => {});
-        }
-
-        if (navigator.storage && navigator.storage.persist) {
-            navigator.storage.persist().catch(() => {});
-        }
-
-        $("night-label").textContent = "SIN CITY";
-        $("night-sub").textContent = "Halloween Edition · 30 OCT";
-        updateStats();
-
-        // DEBUG
-        window.__qrDebug = {
-            validateQR: validateQR,
-            updateStats: updateStats,
-            supabase: supabase
-        };
-
-        console.log("✅ Puerta Sin City Fest - Modo escáner");
-        console.log("Para testing: window.__qrDebug.validateQR('QR-2026-10-001')");
-    </script>
+    // Para pruebas automáticas
+    window.__door = { procesarCodigo: procesarCodigo, sync: sync, st: st, entrar: entrar, parseQR: parseQR };
+})();
+</script>
 </body>
 </html>
