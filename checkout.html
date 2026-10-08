@@ -405,7 +405,8 @@
             document.getElementById('total-price').textContent = '$' + total.toLocaleString();
         }
 
-        const FUNCTIONS_BASE = "https://tpdormyzwodptmtdksrs.supabase.co/functions/v1";
+        const SUPABASE_URL = "https://tpdormyzwodptmtdksrs.supabase.co";
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwZG9ybXl6d29kcHRtdGRrc3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMzU4MjYsImV4cCI6MjEwNjYxMTgyNn0.elK5v13Ufz1ogpykGnE0713OuMha6f03djTnIgYJ7iY";
 
         function procesarPago() {
             const tipo = document.getElementById('ticket-type').value;
@@ -427,26 +428,29 @@
             btn.disabled = true;
             btn.textContent = 'Procesando...';
 
-            // Llamar a Edge Function /create-order
-            fetch(FUNCTIONS_BASE + "/create-order", {
+            // Llamar a función RPC create_order_rpc
+            fetch(SUPABASE_URL + "/rest/v1/rpc/create_order_rpc", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    "apikey": SUPABASE_KEY
+                },
                 body: JSON.stringify({
-                    full_name: nombre,
-                    email: email,
-                    phone: telefono,
-                    access_type: tipo === 'vip' ? 'vip' : 'general',
-                    stage: currentStage,
-                    quantity: cantidad
+                    p_full_name: nombre,
+                    p_email: email,
+                    p_phone: telefono,
+                    p_access_type: tipo === 'vip' ? 'vip' : 'general',
+                    p_stage: currentStage,
+                    p_quantity: cantidad
                 })
             })
             .then(r => r.json().then(d => ({ ok: r.ok, data: d })))
             .then(res => {
                 if (!res.ok) {
-                    throw new Error(res.data?.error || 'Error creando orden');
+                    throw new Error(res.data?.[0]?.error || 'Error creando orden');
                 }
 
-                const orderData = res.data;
+                const orderData = res.data?.[0] || res.data;
                 
                 // Guardar orden en localStorage
                 var orders = JSON.parse(localStorage.getItem("sincity_orders") || "[]");
