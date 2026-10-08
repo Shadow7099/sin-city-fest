@@ -364,8 +364,8 @@
             display: inline-block;
             padding: 12px;
             border: 2px solid var(--color-black);
-            min-height: 200px;
-            min-width: 200px;
+            min-height: 260px;
+            min-width: 260px;
         }
 
         .qr-box canvas, .qr-box img { display: block; max-width: 100%; height: auto; }
@@ -496,11 +496,11 @@
                 const box = el('div', 'qr-box');
                 card.appendChild(box);
                 try {
-                    new QRCode(box, { text: t.qr_payload, width: 200, height: 200, correctLevel: QRCode.CorrectLevel.M });
+                    new QRCode(box, { text: t.qr_payload, width: 260, height: 260, correctLevel: QRCode.CorrectLevel.M });
                 } catch (e) {
                     box.textContent = 'No se pudo dibujar el QR. Código: ' + t.qr_payload;
                 }
-                card.appendChild(el('div', 'token', t.qr_payload));
+                card.appendChild(el('div', 'token', 'CÓDIGO ' + (String(t.qr_payload).split('.')[1] || String(t.qr_payload)).slice(0, 8).toUpperCase()));
 
                 const dl = el('button', 'checkout-button', 'Descargar QR');
                 dl.type = 'button';
