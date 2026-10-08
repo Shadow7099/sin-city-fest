@@ -315,16 +315,6 @@
                         <option value="vip">VIP Access</option>
                     </select>
                 </div>
-
-                <div>
-                    <label for="ticket-stage">Etapa de Venta:</label>
-                    <select id="ticket-stage" onchange="calcularPrecio()">
-                        <option value="">Selecciona etapa...</option>
-                        <option value="E1">Etapa 1</option>
-                        <option value="E2">Etapa 2</option>
-                        <option value="E3">Etapa 3</option>
-                    </select>
-                </div>
             </div>
 
             <div class="form-group">
@@ -332,6 +322,12 @@
                     <label for="quantity">Cantidad de Boletas:</label>
                     <input type="number" id="quantity" value="1" min="1" max="10" onchange="calcularPrecio()">
                 </div>
+            </div>
+
+            <div class="form-group">
+                <p style="color: var(--color-yellow); font-size: 0.9rem;">
+                    <strong>Etapa actual:</strong> Etapa 1 (E1)
+                </p>
             </div>
         </div>
 
@@ -387,18 +383,19 @@
 
     <script>
         const precios = {
-            general: { 1: 25000, 2: 30000, 3: 35000 },
-            vip: { 1: 35000, 2: 40000, 3: 45000 }
+            general: { E1: 25000, E2: 30000, E3: 35000 },
+            vip: { E1: 35000, E2: 40000, E3: 45000 }
         };
+        
+        const currentStage = "E1"; // Etapa actual (modificar aquí para cambiar de etapa)
 
         function calcularPrecio() {
             const type = document.getElementById('ticket-type').value;
-            const stage = document.getElementById('ticket-stage').value;
             const quantity = parseInt(document.getElementById('quantity').value) || 1;
 
             let unitPrice = 0;
-            if (type && stage && precios[type][stage]) {
-                unitPrice = precios[type][stage];
+            if (type && precios[type][currentStage]) {
+                unitPrice = precios[type][currentStage];
             }
 
             const total = unitPrice * quantity;
@@ -412,19 +409,18 @@
 
         function procesarPago() {
             const tipo = document.getElementById('ticket-type').value;
-            const etapa = document.getElementById('ticket-stage').value;
             const cantidad = parseInt(document.getElementById('quantity').value);
             const nombre = document.getElementById('nombre').value;
             const email = document.getElementById('email').value;
             const telefono = document.getElementById('telefono').value;
 
             // Validar campos
-            if (!tipo || !etapa || !nombre || !email || !telefono || !cantidad) {
+            if (!tipo || !nombre || !email || !telefono || !cantidad) {
                 alert('Por favor completa todos los campos');
                 return;
             }
 
-            const total = (precios[tipo][etapa] * cantidad);
+            const total = (precios[tipo][currentStage] * cantidad);
 
             // Deshabilitar botón mientras se procesa
             const btn = event.target;
@@ -440,7 +436,7 @@
                     email: email,
                     phone: telefono,
                     access_type: tipo === 'vip' ? 'vip' : 'general',
-                    stage: etapa,
+                    stage: currentStage,
                     quantity: cantidad
                 })
             })
