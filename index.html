@@ -690,50 +690,6 @@
             color: var(--color-yellow);
         }
 
-        /* Cuenta regresiva */
-        .countdown-wrap {
-            text-align: center;
-            margin: 6px 0 26px;
-        }
-
-        .countdown-label {
-            font-size: 0.85rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--color-cream);
-            text-shadow: 2px 2px 0 var(--color-black);
-            margin-bottom: 8px;
-        }
-
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .cd-box {
-            background: var(--color-black);
-            border: 3px solid white;
-            min-width: 74px;
-            padding: 8px 6px 6px;
-            text-align: center;
-        }
-
-        .cd-num {
-            font-family: 'Barbra-Regular', serif;
-            font-size: 2rem;
-            line-height: 1.1;
-            color: var(--color-yellow);
-            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.6);
-        }
-
-        .cd-lbl {
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--color-cream);
-        }
-
         /* Etapas de precio: vigente / cerradas */
         .price-item.stage-active {
             background: rgba(244, 208, 63, 0.16);
@@ -810,8 +766,6 @@
             .sticky-cta { display: block; }
             #heroImageContainer, #heroImageContainer2 { height: 420px; }
             .cta-block .buy-button { font-size: 1.4rem; padding: 14px 20px; width: 100%; }
-            .cd-box { min-width: 64px; }
-            .cd-num { font-size: 1.6rem; }
             .date-boxes { flex-direction: row; justify-content: center; gap: 12px; }
             .date-box { min-width: 0; flex: 1; padding: 10px 8px; }
             .date-box-value { font-size: 1.5rem; }
@@ -830,6 +784,24 @@
                         <span class="title-part-2">FEST</span>
                     </h1>
                     <div class="subtitle">Halloween Edition</div>
+                </div>
+
+                <!-- MAPA DEL EVENTO -->
+                <div class="event-map-section">
+                    <div class="map-header">
+                        <div class="map-location-title">HACIENDA EL ENCANTO</div>
+                        <div class="map-location-address">KM 5.5 VÍA SUBA-COTA</div>
+                    </div>
+                    <div id="eventMapContainer"><img src="https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/Untitled-2.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L1VudGl0bGVkLTIud2VicCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3OTExNzY1MDAsImV4cCI6MTgyMjcxMjUwMH0.PxPime5WxGeyxNzKAs_ahTNFQKfxr2S6nqDEzIVl-9FzWDjfINqw1k-F3cCAqBgoyIPQpcPycN0HWfo6K8vjqQ" alt="Mapa del evento - Hacienda El Encanto" loading="lazy" decoding="async"></div>
+                </div>
+
+                <!-- UBICACIÓN Y ENTRETENIMIENTO -->
+                <div class="location-entertainment">
+                    <div class="location-title">HACIENDA EL ENCANTO</div>
+                    <div class="location-text">KM 5.5 VÍA SUBA-COTA</div>
+                    <div class="entertainment">
+                        <strong>SPECIAL LOCAL DJS LINEUP</strong> x <strong>ATRACCIONES</strong>
+                    </div>
                 </div>
 
                 <!-- FECHA Y HORA -->
@@ -855,31 +827,8 @@
                     </div>
                 </div>
 
-                <!-- CUENTA REGRESIVA -->
-                <div class="countdown-wrap" id="countdownWrap">
-                    <div class="countdown-label">Faltan para abrir puertas</div>
-                    <div class="countdown">
-                        <div class="cd-box"><div class="cd-num" id="cdD">--</div><div class="cd-lbl">días</div></div>
-                        <div class="cd-box"><div class="cd-num" id="cdH">--</div><div class="cd-lbl">horas</div></div>
-                        <div class="cd-box"><div class="cd-num" id="cdM">--</div><div class="cd-lbl">min</div></div>
-                        <div class="cd-box"><div class="cd-num" id="cdS">--</div><div class="cd-lbl">seg</div></div>
-                    </div>
-                </div>
-
                 <!-- IMAGEN HERO -->
                 <div id="heroImageContainer"><img src="https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/PERSONAJES%201.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L1BFUlNPTkFKRVMgMS53ZWJwIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc5MTA2ODI5MywiZXhwIjoxODIyNjA0MjkzfQ.BVkZR8XlKvEyorewbKul6LA5FC1Ljl4vZ3pmafgPRO1x0AzLFPF1JD_P14ZSm1Hm_kWedJuzN9N9nScYF97Y0g" alt="Personajes Sin City Fest" fetchpriority="high" decoding="async"></div>
-
-                <!-- UBICACIÓN Y ENTRETENIMIENTO -->
-                <div class="location-entertainment">
-                    <div class="location-title">HACIENDA EL ENCANTO</div>
-                    <div class="location-text">KM 5.5 VÍA SUBA-COTA</div>
-                    <div class="entertainment">
-                        <strong>SPECIAL LOCAL DJS LINEUP</strong> x <strong>ATRACCIONES</strong>
-                    </div>
-                </div>
-
-                <!-- IMAGEN PERSONAJES 2 -->
-                <div id="heroImageContainer2"><img src="https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/image_2026-10-03_174844997.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L2ltYWdlXzIwMjYtMTAtMDNfMTc0ODQ0OTk3LndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkxMDY4MzA1LCJleHAiOjE4MjI2MDQzMDV9.EqqOcnV5IhwD7mn8aMA-kRr3wLfZEKq8t4NepLdukfcye6ndiD6Ic8rSRi6f4AgPze2u2gWEtjUGmRrOOKEBew" alt="Personajes Sin City Fest 2" loading="lazy" decoding="async"></div>
 
                 <!-- PREMIOS Y COSTUMOS (el gancho, antes de mostrar el precio) -->
                 <div class="awards-section">
@@ -925,6 +874,9 @@
                     </div>
                 </div>
 
+                <!-- IMAGEN PERSONAJES 2 -->
+                <div id="heroImageContainer2"><img src="https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/image_2026-10-03_174844997.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L2ltYWdlXzIwMjYtMTAtMDNfMTc0ODQ0OTk3LndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkxMDY4MzA1LCJleHAiOjE4MjI2MDQzMDV9.EqqOcnV5IhwD7mn8aMA-kRr3wLfZEKq8t4NepLdukfcye6ndiD6Ic8rSRi6f4AgPze2u2gWEtjUGmRrOOKEBew" alt="Personajes Sin City Fest 2" loading="lazy" decoding="async"></div>
+
                 <!-- PRECIOS (con botón de compra en cada columna) -->
                 <div class="pricing-grid" id="pricing">
                     <div class="pricing-column">
@@ -967,15 +919,6 @@
                 </div>
                 <div class="stage-note" id="stageNote"></div>
 
-                <!-- MAPA DEL EVENTO -->
-                <div class="event-map-section">
-                    <div class="map-header">
-                        <div class="map-location-title">HACIENDA EL ENCANTO</div>
-                        <div class="map-location-address">KM 5.5 VÍA SUBA-COTA</div>
-                    </div>
-                    <div id="eventMapContainer"><img src="https://tpdormyzwodptmtdksrs.supabase.co/storage/v1/object/sign/sin%20city%20fest/Untitled-2.webp?token=eyJraWQiOiI1NmY5Y2NkOC02ZDdlLTQ5YTQtYmRhMC1mZTVjY2I1Yzg1YjMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJzaW4gY2l0eSBmZXN0L1VudGl0bGVkLTIud2VicCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3OTExNzY1MDAsImV4cCI6MTgyMjcxMjUwMH0.PxPime5WxGeyxNzKAs_ahTNFQKfxr2S6nqDEzIVl-9FzWDjfINqw1k-F3cCAqBgoyIPQpcPycN0HWfo6K8vjqQ" alt="Mapa del evento - Hacienda El Encanto" loading="lazy" decoding="async"></div>
-                </div>
-
                 <!-- BOTÓN FINAL -->
                 <div class="buy-section" id="finalCta">
                     <a class="buy-button" href="checkout.html" data-cta="final">Comprar Boletas</a>
@@ -1007,7 +950,6 @@
         var SUPABASE_URL = "https://tpdormyzwodptmtdksrs.supabase.co";
         var ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwZG9ybXl6d29kcHRtdGRrc3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMzU4MjYsImV4cCI6MjEwNjYxMTgyNn0.elK5v13Ufz1ogpykGnE0713OuMha6f03djTnIgYJ7iY";
         var PRECIOS = { general: { 1: 25000, 2: 30000, 3: 35000 }, vip: { 1: 35000, 2: 40000, 3: 45000 } };
-        var EVENTO = new Date('2026-10-30T19:00:00-05:00').getTime(); // apertura de puertas, hora de Bogotá
 
         function $(id) { return document.getElementById(id); }
         function fmt(n) { return '$' + Number(n).toLocaleString('es-CO'); }
@@ -1045,20 +987,6 @@
             if (rows && rows[0] && rows[0].current_stage) aplicarEtapa(parseInt(String(rows[0].current_stage).replace(/\D/g, ''), 10));
         })
         .catch(function () { /* si falla, la página queda con los precios estáticos */ });
-
-        // ===== Cuenta regresiva =====
-        function tickCountdown() {
-            var diff = EVENTO - Date.now();
-            if (diff <= 0) { $('countdownWrap').style.display = 'none'; return false; }
-            var d = Math.floor(diff / 86400000), h = Math.floor(diff % 86400000 / 3600000),
-                m = Math.floor(diff % 3600000 / 60000), s = Math.floor(diff % 60000 / 1000);
-            $('cdD').textContent = d;
-            $('cdH').textContent = ('0' + h).slice(-2);
-            $('cdM').textContent = ('0' + m).slice(-2);
-            $('cdS').textContent = ('0' + s).slice(-2);
-            return true;
-        }
-        if (tickCountdown()) { var cdTimer = setInterval(function () { if (!tickCountdown()) clearInterval(cdTimer); }, 1000); }
 
         // ===== Barra fija: aparece al pasar el botón de arriba y se oculta cerca de los otros botones =====
         (function () {
